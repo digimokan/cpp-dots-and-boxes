@@ -21,7 +21,7 @@ CPP
 # testing language standard (N/A if building without -t/-T)
 17
 # testing top-level src dirs: colon-separated, "-" if none
-tests
+tests:third_party/doctest/doctest
 # test-driver executable to build (N/A if building without -t/-T)
 unit-tester
 # EOF: FILE MUST END WITH THIS LAST LINE
