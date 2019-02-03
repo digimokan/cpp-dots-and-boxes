@@ -25,3 +25,11 @@ Board::Board (const std::size_t dimension)
   : dimension{dimension}
 { }
 
+/*******************************************************************************
+* SPECIALIZED METHODS
+*******************************************************************************/
+
+std::size_t Board::get_dimension () const {
+  return this->dimension;
+}
+
