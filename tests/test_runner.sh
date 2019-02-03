@@ -5,5 +5,5 @@ cd .. && \
   --clean-all \
   --build-type-release \
   --make-tests && \
-./eight-puzzle-tests --no-skip
+./test_runner.sh --no-skip
 

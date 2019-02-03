@@ -11,11 +11,11 @@ CPP
 # warning levels: space-separated, "-" if empty
 -Wall -Wno-unused
 # top-level src dirs: colon-separated
-src:third_party/doctest/doctest
+src
 # src file with main-executable code: "-" if none, i.e. test only
 src/main.cpp
 # main executable file to build: "-" if none, i.e. test only
-cpp-dots-and-boxes
+dots-and-boxes
 # testing language type: "C" or "CPP" (N/A if building without -t/-T)
 CPP
 # testing language standard (N/A if building without -t/-T)
