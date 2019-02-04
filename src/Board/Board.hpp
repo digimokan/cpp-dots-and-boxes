@@ -16,6 +16,12 @@ purpose:  a dots and boxes board
 #include <vector>
 
 /*******************************************************************************
+* USER INCLUDES
+*******************************************************************************/
+
+#include "BoxMarks.hpp"
+
+/*******************************************************************************
 * INTERFACE
 *******************************************************************************/
 
@@ -45,6 +51,7 @@ private:
   // fields
   const std::size_t dimensions;
   std::vector<bool> lines;
+  BoxMarks box_marks;
 
   // helper methods
   std::size_t calc_num_lines (std::size_t dimensions) const;

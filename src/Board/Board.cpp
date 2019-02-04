@@ -17,6 +17,7 @@ purpose:  a dots and boxes board
 *******************************************************************************/
 
 #include "Board.hpp"
+#include "BoxMarks.hpp"
 
 /*******************************************************************************
 * CONSTRUCTORS
@@ -24,7 +25,8 @@ purpose:  a dots and boxes board
 
 Board::Board (std::size_t dimensions)
   : dimensions{dimensions},
-    lines(this->calc_num_lines(dimensions), false)
+    lines(this->calc_num_lines(dimensions), false),
+    box_marks{ dimensions }
 { }
 
 /*******************************************************************************
