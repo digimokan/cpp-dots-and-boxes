@@ -13,6 +13,7 @@ purpose:  a dots and boxes board
 *******************************************************************************/
 
 #include <cstddef>
+#include <vector>
 
 /*******************************************************************************
 * INTERFACE
@@ -24,24 +25,29 @@ public:
 
   // constructors
   Board () = delete;
-  explicit Board (std::size_t dimension);
+  explicit Board (std::size_t dimensions);
 
   // destructor
   ~Board () = default;
 
   // operators
   Board (const Board& in) = default;
-  Board& operator= (const Board& rh) = default;
+  Board& operator= (const Board& rh) = delete;
   Board (Board&& in) = default;
-  Board& operator= (Board&& rh) = default;
+  Board& operator= (Board&& rh) = delete;
 
   // specialized methods
-  size_t get_dimension () const;
+  std::size_t get_dimensions () const;
+  std::size_t get_num_lines () const;
 
 private:
 
   // fields
-  std::size_t dimension;
+  const std::size_t dimensions;
+  std::vector<bool> lines;
+
+  // helper methods
+  std::size_t calc_num_lines (std::size_t dimensions) const;
 
 };
 

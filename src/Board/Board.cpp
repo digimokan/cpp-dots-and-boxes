@@ -10,6 +10,7 @@ purpose:  a dots and boxes board
 *******************************************************************************/
 
 #include <cstddef>
+#include <vector>
 
 /*******************************************************************************
 * USER INCLUDES
@@ -21,15 +22,28 @@ purpose:  a dots and boxes board
 * CONSTRUCTORS
 *******************************************************************************/
 
-Board::Board (const std::size_t dimension)
-  : dimension{dimension}
+Board::Board (std::size_t dimensions)
+  : dimensions{dimensions},
+    lines(this->calc_num_lines(dimensions), false)
 { }
 
 /*******************************************************************************
 * SPECIALIZED METHODS
 *******************************************************************************/
 
-std::size_t Board::get_dimension () const {
-  return this->dimension;
+std::size_t Board::get_dimensions () const {
+  return this->dimensions;
+}
+
+std::size_t Board::get_num_lines () const {
+  return this->lines.size();
+}
+
+/*******************************************************************************
+* HELPER METHODS
+*******************************************************************************/
+
+std::size_t Board::calc_num_lines (std::size_t dimensions) const {
+  return ( (2 * dimensions) * (dimensions + 1) );
 }
 
