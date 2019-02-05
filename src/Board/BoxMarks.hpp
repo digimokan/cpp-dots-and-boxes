@@ -14,6 +14,7 @@ purpose:  map of box_num -> marking_player
 
 #include <cstddef>
 #include <unordered_map>
+#include <unordered_set>
 
 /*******************************************************************************
 * FORWARD DECLARES
@@ -53,7 +54,8 @@ private:
 
   // fields
   std::unordered_map<std::size_t, Player> marks;
-  std::size_t num_unmarked;
+  std::unordered_set<std::size_t> unmarked_boxnums;
+  std::unordered_set<std::size_t> marked_boxnums;
 
 };
 

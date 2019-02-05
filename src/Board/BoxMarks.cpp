@@ -11,6 +11,7 @@ purpose:  map of box_num -> marking_player
 
 #include <cassert>
 #include <cstddef>
+#include <numeric>
 #include <unordered_map>
 
 /*******************************************************************************
@@ -24,9 +25,10 @@ purpose:  map of box_num -> marking_player
 * CONSTRUCTORS
 *******************************************************************************/
 
-BoxMarks::BoxMarks (std::size_t board_dimensions)
-  : num_unmarked{board_dimensions * board_dimensions}
-{ }
+BoxMarks::BoxMarks (std::size_t board_dimensions) {
+  for (std::size_t i = 0; i < (board_dimensions * board_dimensions); ++i)
+    this->unmarked_boxnums.insert(this->unmarked_boxnums.end(), i);
+}
 
 /*******************************************************************************
 * SPECIALIZED METHODS
@@ -41,17 +43,20 @@ bool BoxMarks::not_marked (std::size_t box_num) const {
 }
 
 void BoxMarks::mark (std::size_t box_num, Player player) {
-  assert(this->not_marked(box_num) > 0);
+  assert(! this->unmarked_boxnums.empty());
+  assert(this->marks.count(box_num) == 0);
+  assert(this->unmarked_boxnums.count(box_num) == 1);
+  assert(this->marked_boxnums.count(box_num) == 0);
   this->marks.insert(std::make_pair(box_num, player));
-  assert(this->num_unmarked > 0);
-  this->num_unmarked--;
+  this->unmarked_boxnums.erase(box_num);
+  this->marked_boxnums.insert(box_num);
 }
 
 std::size_t BoxMarks::get_num_unmarked () const {
-  return this->num_unmarked;
+  return this->unmarked_boxnums.size();
 }
 
 bool BoxMarks::all_marked () const {
-  return (this->num_unmarked == 0);
+  return this->unmarked_boxnums.empty();
 }
 
