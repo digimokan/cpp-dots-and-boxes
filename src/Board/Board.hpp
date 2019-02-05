@@ -13,13 +13,13 @@ purpose:  a dots and boxes board
 *******************************************************************************/
 
 #include <cstddef>
-#include <vector>
 
 /*******************************************************************************
 * USER INCLUDES
 *******************************************************************************/
 
 #include "BoxMarks.hpp"
+#include "Lines.hpp"
 
 /*******************************************************************************
 * INTERFACE
@@ -42,17 +42,11 @@ public:
   Board (Board&& in) = default;
   Board& operator= (Board&& rh) = default;
 
-  // specialized methods
-  std::size_t get_num_lines () const;
-
 private:
 
   // fields
-  std::vector<bool> lines;
+  Lines lines;
   BoxMarks box_marks;
-
-  // helper methods
-  std::size_t calc_num_lines (std::size_t dimensions) const;
 
 };
 

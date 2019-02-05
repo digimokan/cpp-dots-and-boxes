@@ -24,7 +24,7 @@ purpose:  a dots and boxes board
 *******************************************************************************/
 
 Board::Board (std::size_t dimensions)
-  : lines(this->calc_num_lines(dimensions), false),
+  : lines{ dimensions },
     box_marks{ dimensions }
 { }
 
@@ -32,15 +32,7 @@ Board::Board (std::size_t dimensions)
 * SPECIALIZED METHODS
 *******************************************************************************/
 
-std::size_t Board::get_num_lines () const {
-  return this->lines.size();
-}
-
 /*******************************************************************************
 * HELPER METHODS
 *******************************************************************************/
-
-std::size_t Board::calc_num_lines (std::size_t dimensions) const {
-  return ( (2 * dimensions) * (dimensions + 1) );
-}
 
