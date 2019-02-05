@@ -44,10 +44,13 @@ public:
   BoxMarks& operator= (BoxMarks&& rh) = default;
 
   // specialized methods
+  std::size_t get_num_boxes () const;
+  std::size_t get_board_dimensions () const;
   bool is_marked (std::size_t box_num) const;
   bool not_marked (std::size_t box_num) const;
   void mark (std::size_t box_num, Player player);
   std::size_t get_num_unmarked () const;
+  std::size_t get_num_marked () const;
   bool all_marked () const;
 
 private:

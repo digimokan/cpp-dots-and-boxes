@@ -23,7 +23,10 @@ TEST_CASE("empty BoxMarks") {
       CHECK_FALSE(box_marks.is_marked(i));
       CHECK_UNARY(box_marks.not_marked(i));
     }
+    CHECK_EQ(box_marks.get_board_dimensions(), dimensions);
+    CHECK_EQ(box_marks.get_num_boxes(), dimensions * dimensions);
     CHECK_EQ(box_marks.get_num_unmarked(), dimensions * dimensions);
+    CHECK_EQ(box_marks.get_num_marked(), 0);
     CHECK_FALSE(box_marks.all_marked());
   }
 
@@ -34,7 +37,10 @@ TEST_CASE("empty BoxMarks") {
       CHECK_FALSE(box_marks.is_marked(i));
       CHECK_UNARY(box_marks.not_marked(i));
     }
+    CHECK_EQ(box_marks.get_board_dimensions(), dimensions);
+    CHECK_EQ(box_marks.get_num_boxes(), dimensions * dimensions);
     CHECK_EQ(box_marks.get_num_unmarked(), dimensions * dimensions);
+    CHECK_EQ(box_marks.get_num_marked(), 0);
     CHECK_FALSE(box_marks.all_marked());
   }
 
@@ -45,7 +51,10 @@ TEST_CASE("empty BoxMarks") {
       CHECK_FALSE(box_marks.is_marked(i));
       CHECK_UNARY(box_marks.not_marked(i));
     }
+    CHECK_EQ(box_marks.get_board_dimensions(), dimensions);
+    CHECK_EQ(box_marks.get_num_boxes(), dimensions * dimensions);
     CHECK_EQ(box_marks.get_num_unmarked(), dimensions * dimensions);
+    CHECK_EQ(box_marks.get_num_marked(), 0);
     CHECK_FALSE(box_marks.all_marked());
   }
 
@@ -57,7 +66,10 @@ TEST_CASE("empty BoxMarks") {
       CHECK_FALSE(box_marks.is_marked(i));
       CHECK_UNARY(box_marks.not_marked(i));
     }
+    CHECK_EQ(box_marks.get_board_dimensions(), dimensions);
+    CHECK_EQ(box_marks.get_num_boxes(), dimensions * dimensions);
     CHECK_EQ(box_marks.get_num_unmarked(), dimensions * dimensions);
+    CHECK_EQ(box_marks.get_num_marked(), 0);
     CHECK_FALSE(box_marks.all_marked());
   }
 

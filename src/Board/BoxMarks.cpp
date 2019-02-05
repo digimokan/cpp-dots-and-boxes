@@ -10,6 +10,7 @@ purpose:  map of box_num -> marking_player
 *******************************************************************************/
 
 #include <cassert>
+#include <cmath>
 #include <cstddef>
 #include <numeric>
 #include <unordered_map>
@@ -34,6 +35,14 @@ BoxMarks::BoxMarks (std::size_t board_dimensions) {
 * SPECIALIZED METHODS
 *******************************************************************************/
 
+std::size_t BoxMarks::get_num_boxes () const {
+  return (this->get_num_unmarked() + this->get_num_marked());
+}
+
+std::size_t BoxMarks::get_board_dimensions () const {
+  return ( static_cast<std::size_t>(std::sqrt(this->get_num_boxes())) );
+}
+
 bool BoxMarks::is_marked (std::size_t box_num) const {
   return (this->marks.count(box_num) != 0);
 }
@@ -54,6 +63,10 @@ void BoxMarks::mark (std::size_t box_num, Player player) {
 
 std::size_t BoxMarks::get_num_unmarked () const {
   return this->unmarked_boxnums.size();
+}
+
+std::size_t BoxMarks::get_num_marked () const {
+  return this->marked_boxnums.size();
 }
 
 bool BoxMarks::all_marked () const {
