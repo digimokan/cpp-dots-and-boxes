@@ -38,18 +38,16 @@ public:
 
   // operators
   Board (const Board& in) = default;
-  Board& operator= (const Board& rh) = delete;
+  Board& operator= (const Board& rh) = default;
   Board (Board&& in) = default;
-  Board& operator= (Board&& rh) = delete;
+  Board& operator= (Board&& rh) = default;
 
   // specialized methods
-  std::size_t get_dimensions () const;
   std::size_t get_num_lines () const;
 
 private:
 
   // fields
-  const std::size_t dimensions;
   std::vector<bool> lines;
   BoxMarks box_marks;
 
