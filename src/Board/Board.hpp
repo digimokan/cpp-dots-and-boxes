@@ -13,6 +13,7 @@ purpose:  a dots and boxes board
 *******************************************************************************/
 
 #include <cstddef>
+#include <memory>
 
 /*******************************************************************************
 * USER INCLUDES
@@ -20,6 +21,12 @@ purpose:  a dots and boxes board
 
 #include "BoxMarks.hpp"
 #include "Lines.hpp"
+
+/*******************************************************************************
+* FORWARD DECLARES
+*******************************************************************************/
+
+class BoxToLinesMap;
 
 /*******************************************************************************
 * INTERFACE
@@ -47,6 +54,7 @@ private:
   // fields
   Lines lines;
   BoxMarks box_marks;
+  std::shared_ptr<const BoxToLinesMap> blmap;
 
 };
 

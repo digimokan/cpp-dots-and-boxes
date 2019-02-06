@@ -10,6 +10,7 @@ purpose:  a dots and boxes board
 *******************************************************************************/
 
 #include <cstddef>
+#include <memory>
 
 /*******************************************************************************
 * USER INCLUDES
@@ -17,6 +18,7 @@ purpose:  a dots and boxes board
 
 #include "Board.hpp"
 #include "BoxMarks.hpp"
+#include "BoxToLinesMap.hpp"
 
 /*******************************************************************************
 * CONSTRUCTORS
@@ -24,7 +26,8 @@ purpose:  a dots and boxes board
 
 Board::Board (std::size_t dimensions)
   : lines{ dimensions },
-    box_marks{ dimensions }
+    box_marks{ dimensions },
+    blmap{ std::make_shared<BoxToLinesMap>(dimensions) }
 { }
 
 /*******************************************************************************
