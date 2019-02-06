@@ -27,6 +27,7 @@ purpose:  a dots and boxes board
 *******************************************************************************/
 
 class BoxToLinesMap;
+class LineToBoxesMap;
 
 /*******************************************************************************
 * INTERFACE
@@ -55,6 +56,7 @@ private:
   Lines lines;
   BoxMarks box_marks;
   std::shared_ptr<const BoxToLinesMap> blmap;
+  std::shared_ptr<const LineToBoxesMap> lbmap;
 
 };
 
