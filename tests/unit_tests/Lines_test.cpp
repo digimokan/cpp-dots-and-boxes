@@ -62,6 +62,14 @@ TEST_CASE("all lines unmarked") {
     CHECK_FALSE(lines.all_marked());
   }
 
+  SUBCASE("for_each_unmarked_line_num()") {
+    constexpr std::size_t expected_sum{ 780 };
+    std::size_t sum{ 0 };
+    auto add_to_sum = [&sum] (std::size_t line_num) { sum += line_num; };
+    lines.for_each_unmarked_line_num(add_to_sum);
+    CHECK_EQ(sum, expected_sum);
+  }
+
 }
 
 TEST_CASE("all lines marked") {
@@ -82,6 +90,14 @@ TEST_CASE("all lines marked") {
 
   SUBCASE("all_marked()") {
     CHECK_UNARY(lines.all_marked());
+  }
+
+  SUBCASE("for_each_unmarked_line_num()") {
+    constexpr std::size_t expected_sum{ 0 };
+    std::size_t sum{ 0 };
+    auto add_to_sum = [&sum] (std::size_t line_num) { sum += line_num; };
+    lines.for_each_unmarked_line_num(add_to_sum);
+    CHECK_EQ(sum, expected_sum);
   }
 
 }
@@ -113,6 +129,14 @@ TEST_CASE("some lines marked") {
     CHECK_FALSE(lines.all_marked());
   }
 
+  SUBCASE("for_each_unmarked_line_num()") {
+    constexpr std::size_t expected_sum{ 777 };
+    std::size_t sum{ 0 };
+    auto add_to_sum = [&sum] (std::size_t line_num) { sum += line_num; };
+    lines.for_each_unmarked_line_num(add_to_sum);
+    CHECK_EQ(sum, expected_sum);
+  }
+
 }
 
 TEST_CASE("copied lines, some lines marked") {
@@ -142,6 +166,14 @@ TEST_CASE("copied lines, some lines marked") {
 
   SUBCASE("all_marked()") {
     CHECK_FALSE(lines.all_marked());
+  }
+
+  SUBCASE("for_each_unmarked_line_num()") {
+    constexpr std::size_t expected_sum{ 777 };
+    std::size_t sum{ 0 };
+    auto add_to_sum = [&sum] (std::size_t line_num) { sum += line_num; };
+    lines.for_each_unmarked_line_num(add_to_sum);
+    CHECK_EQ(sum, expected_sum);
   }
 
 }

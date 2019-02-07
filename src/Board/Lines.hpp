@@ -13,6 +13,8 @@ purpose:  data structure containing the unique lines of a dots and boxes board
 *******************************************************************************/
 
 #include <cstddef>
+#include <functional>
+#include <set>
 #include <vector>
 
 /*******************************************************************************
@@ -42,14 +44,17 @@ public:
   bool not_marked (std::size_t line_num) const;
   bool all_marked () const;
   std::size_t get_max_lines () const;
+  void for_each_unmarked_line_num (const std::function<void(std::size_t line_num)>& act_on_line_num) const;
 
 private:
 
   // helper methods
   std::size_t calc_num_lines (std::size_t dimensions) const;
+  void init_unmarked_lines ();
 
   // fields
   std::vector<bool> lines;
+  std::set<std::size_t> unmarked_lines;
 
 };
 
