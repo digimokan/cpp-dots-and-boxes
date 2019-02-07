@@ -37,7 +37,7 @@ public:
   Lines& operator= (Lines&& rh) = default;
 
   // specialized methods
-  std::size_t get_num_lines () const;
+  std::size_t get_max_lines () const;
 
 private:
 

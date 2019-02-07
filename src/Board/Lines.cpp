@@ -30,7 +30,7 @@ Lines::Lines (std::size_t dimensions)
 * SPECIALIZED METHODS
 *******************************************************************************/
 
-std::size_t Lines::get_num_lines () const {
+std::size_t Lines::get_max_lines () const {
   return this->lines.size();
 }
 

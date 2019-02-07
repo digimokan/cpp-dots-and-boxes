@@ -69,7 +69,7 @@ void LineToBoxesMap::init_map (std::size_t board_dimensions) {
 }
 
 void LineToBoxesMap::init_line_sets (std::size_t board_dimensions) {
-  const std::size_t num_lines{ Lines{board_dimensions}.get_num_lines() };
+  const std::size_t num_lines{ Lines{board_dimensions}.get_max_lines() };
   for (std::size_t line_num = 0; line_num < num_lines; ++line_num) {
     std::set<size_t> empty_set{};
     this->lbmap.emplace(line_num, empty_set);
