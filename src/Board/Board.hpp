@@ -13,6 +13,7 @@ purpose:  a dots and boxes board
 *******************************************************************************/
 
 #include <cstddef>
+#include <functional>
 #include <memory>
 
 /*******************************************************************************
@@ -51,6 +52,7 @@ public:
   Board& operator= (Board&& rh) = default;
 
   // specialized methods
+  void for_each_unmarked_line_num (const std::function<void(std::size_t line_num)>& act_on_line_num) const;
   bool is_completed () const;
 
 private:

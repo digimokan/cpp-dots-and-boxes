@@ -36,11 +36,11 @@ Board::Board (std::size_t dimensions)
 * SPECIALIZED METHODS
 *******************************************************************************/
 
+void Board::for_each_unmarked_line_num (const std::function<void(std::size_t line_num)>& act_on_line_num) const {
+  this->lines.for_each_unmarked_line_num(act_on_line_num);
+}
+
 bool Board::is_completed () const {
   return this->lines.all_marked();
 }
-
-/*******************************************************************************
-* HELPER METHODS
-*******************************************************************************/
 
