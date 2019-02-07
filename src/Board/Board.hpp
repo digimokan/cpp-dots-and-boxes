@@ -50,6 +50,9 @@ public:
   Board (Board&& in) = default;
   Board& operator= (Board&& rh) = default;
 
+  // specialized methods
+  bool is_completed () const;
+
 private:
 
   // fields
