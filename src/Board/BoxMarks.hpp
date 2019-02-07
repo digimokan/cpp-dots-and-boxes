@@ -13,6 +13,8 @@ purpose:  map of box_num -> marking_player
 *******************************************************************************/
 
 #include <cstddef>
+#include <functional>
+#include <set>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -52,6 +54,7 @@ public:
   std::size_t get_num_unmarked () const;
   std::size_t get_num_marked () const;
   bool all_marked () const;
+  void for_each_player_boxmark (Player player, const std::function<void(std::size_t box_num)>& act_on_box_num) const;
 
 private:
 
@@ -59,6 +62,11 @@ private:
   std::unordered_map<std::size_t, Player> marks;
   std::unordered_set<std::size_t> unmarked_boxnums;
   std::unordered_set<std::size_t> marked_boxnums;
+  std::unordered_map<Player, std::set<std::size_t>> player_boxmarks;
+
+  // helper methods
+  void init_unmarked_boxnums (std::size_t board_dimensions);
+  void init_player_boxmarks ();
 
 };
 
