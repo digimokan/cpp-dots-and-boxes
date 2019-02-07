@@ -37,6 +37,10 @@ public:
   Lines& operator= (Lines&& rh) = default;
 
   // specialized methods
+  void mark (std::size_t line_num);
+  bool is_marked (std::size_t line_num) const;
+  bool not_marked (std::size_t line_num) const;
+  bool all_marked () const;
   std::size_t get_max_lines () const;
 
 private:
