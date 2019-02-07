@@ -30,6 +30,12 @@ purpose:  map a box number to multiple line numbers
 #include <functional>
 
 /*******************************************************************************
+* FORWARD DECLARES
+*******************************************************************************/
+
+class Lines;
+
+/*******************************************************************************
 * INTERFACE
 *******************************************************************************/
 
@@ -56,6 +62,7 @@ public:
   std::size_t get_left_line_num (std::size_t box_num) const;
   std::size_t get_right_line_num (std::size_t box_num) const;
   void for_each_line_num (std::size_t box_num, const std::function<void(std::size_t line_num)>& act_on_line) const;
+  bool all_lines_marked (std::size_t box_num, const Lines& lines) const;
 
 private:
 

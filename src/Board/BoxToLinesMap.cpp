@@ -31,6 +31,7 @@ purpose:  map a box number to multiple line numbers
 *******************************************************************************/
 
 #include "BoxToLinesMap.hpp"
+#include "Lines.hpp"
 
 /*******************************************************************************
 * CONSTRUCTORS
@@ -79,6 +80,18 @@ void BoxToLinesMap::for_each_line_num (std::size_t box_num,
   act_on_line(this->get_bottom_line_num(box_num));
   act_on_line(this->get_left_line_num(box_num));
   act_on_line(this->get_right_line_num(box_num));
+}
+
+bool BoxToLinesMap::all_lines_marked (std::size_t box_num, const Lines& lines) const {
+  if (lines.not_marked(this->get_top_line_num(box_num)))
+    return false;
+  if (lines.not_marked(this->get_bottom_line_num(box_num)))
+    return false;
+  if (lines.not_marked(this->get_left_line_num(box_num)))
+    return false;
+  if (lines.not_marked(this->get_right_line_num(box_num)))
+    return false;
+  return true;
 }
 
 /*******************************************************************************

@@ -9,6 +9,7 @@
 *******************************************************************************/
 
 #include "BoxToLinesMap.hpp"
+#include "Lines.hpp"
 
 /*******************************************************************************
 * TEST CASES
@@ -210,6 +211,67 @@ TEST_CASE("3 x 3 board") {
     CHECK_EQ(blmap.get_right_line_num(box_num), 20);
     blmap.for_each_line_num(box_num, add_to_sum);
     CHECK_EQ(sum, expected_sum);
+  }
+
+}
+
+TEST_CASE("all_lines_marked(box_num, lines)") {
+
+  constexpr std::size_t dimensions{ 3 };
+  constexpr std::size_t num_boxes{ dimensions * dimensions };
+  BoxToLinesMap blmap{ dimensions };
+
+  SUBCASE("no boxes with any marked lines") {
+    Lines lines{ dimensions };
+    for (std::size_t i{0}; i < num_boxes; ++i)
+      CHECK_FALSE(blmap.all_lines_marked(i, lines));
+  }
+
+  SUBCASE("all boxes have all lines marked") {
+    Lines lines{ dimensions };
+    for (std::size_t i{0}; i < lines.get_max_lines(); ++i)
+      lines.mark(i);
+    for (std::size_t i{0}; i < num_boxes; ++i)
+      CHECK_UNARY(blmap.all_lines_marked(i, lines));
+  }
+
+  SUBCASE("one box with all lines marked") {
+    Lines lines{ dimensions };
+    blmap.for_each_line_num(0, [&lines] (const auto line_num) { lines.mark(line_num); });
+    CHECK_UNARY(blmap.all_lines_marked(0, lines));
+    for (std::size_t i{1}; i < num_boxes; ++i)
+      CHECK_FALSE(blmap.all_lines_marked(i, lines));
+  }
+
+  SUBCASE("three boxes with all lines marked") {
+    Lines lines{ dimensions };
+    blmap.for_each_line_num(0, [&lines] (const auto line_num) { if (lines.not_marked(line_num)) lines.mark(line_num); });
+    blmap.for_each_line_num(1, [&lines] (const auto line_num) { if (lines.not_marked(line_num)) lines.mark(line_num); });
+    blmap.for_each_line_num(2, [&lines] (const auto line_num) { if (lines.not_marked(line_num)) lines.mark(line_num); });
+    CHECK_UNARY(blmap.all_lines_marked(0, lines));
+    CHECK_UNARY(blmap.all_lines_marked(1, lines));
+    CHECK_UNARY(blmap.all_lines_marked(2, lines));
+    for (std::size_t i{3}; i < num_boxes; ++i)
+      CHECK_FALSE(blmap.all_lines_marked(i, lines));
+  }
+
+  SUBCASE("one box with some lines marked") {
+    Lines lines{ dimensions };
+    lines.mark(0);
+    lines.mark(3);
+    for (std::size_t i{0}; i < num_boxes; ++i)
+      CHECK_FALSE(blmap.all_lines_marked(i, lines));
+  }
+
+  SUBCASE("three boxes with some lines marked") {
+    Lines lines{ dimensions };
+    lines.mark(0);
+    lines.mark(1);
+    lines.mark(2);
+    lines.mark(4);
+    lines.mark(5);
+    for (std::size_t i{0}; i < num_boxes; ++i)
+      CHECK_FALSE(blmap.all_lines_marked(i, lines));
   }
 
 }
