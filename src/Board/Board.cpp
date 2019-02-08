@@ -11,7 +11,10 @@ purpose:  a dots and boxes board
 
 #include <cassert>
 #include <cstddef>
+#include <functional>
 #include <memory>
+#include <sstream>
+#include <string>
 
 /*******************************************************************************
 * USER INCLUDES
@@ -75,11 +78,103 @@ bool Board::is_completed () const {
 }
 
 /*******************************************************************************
+* FRIEND CLASS METHODS
+*******************************************************************************/
+
+std::ostream& operator<< (std::ostream& os, const Board& board) {
+  const std::size_t dim{ board.get_board_dimensions() };
+
+  os << board.first_box_row_string();
+  for (std::size_t box_row{0}; box_row < dim; ++box_row)
+    os << board.box_row_string(box_row);
+
+  return os;
+}
+
+/*******************************************************************************
 * HELPER METHODS
 *******************************************************************************/
 
 void Board::check_and_mark_box (std::size_t box_num, Player player) {
   if (this->blmap->all_lines_marked(box_num, this->lines))
     this->box_marks.mark(box_num, player);
+}
+
+std::size_t Board::get_board_dimensions () const {
+  return this->box_marks.get_board_dimensions();
+}
+
+std::size_t Board::get_num_boxes () const {
+  return this->box_marks.get_num_boxes();
+}
+
+std::string Board::get_top_line (std::size_t box_num) const {
+  if (this->lines.is_marked(this->blmap->get_top_line_num(box_num)))
+    return u8"―";
+  return u8" ";
+}
+
+std::string Board::get_bottom_line (std::size_t box_num) const {
+  if (this->lines.is_marked(this->blmap->get_bottom_line_num(box_num)))
+    return u8"―";
+  return u8" ";
+}
+
+std::string Board::get_left_line (std::size_t box_num) const {
+  if (this->lines.is_marked(this->blmap->get_left_line_num(box_num)))
+    return u8"|";
+  return u8" ";
+}
+
+std::string Board::get_right_line (std::size_t box_num) const {
+  if (this->lines.is_marked(this->blmap->get_right_line_num(box_num)))
+    return u8"|";
+  return u8" ";
+}
+
+std::string Board::get_box_fill (std::size_t box_num) const {
+  std::stringstream out_fill;
+  if (this->box_marks.is_marked(box_num))
+    out_fill << this->box_marks.get_mark(box_num);
+  else
+    out_fill << u8" ";
+  return out_fill.str();
+}
+
+std::string Board::first_box_row_string () const {
+  const std::size_t dim{ this->get_board_dimensions() };
+  std::string out_string{};
+  out_string.append(u8"·");
+  for (std::size_t i{0}; i < dim; ++i) {
+    out_string.append(u8" ");
+    out_string.append(this->get_top_line(i));
+    out_string.append(u8" ");
+    out_string.append(u8"·");
+  }
+  return out_string;
+}
+
+std::string Board::box_row_string (std::size_t box_row_num) const {
+  const std::size_t dim{ this->get_board_dimensions() };
+  std::string out_string{};
+  out_string.append(u8"\n");
+  out_string.append(this->get_left_line(box_row_num * dim));
+  for (std::size_t i{0}; i < dim; ++i) {
+    const std::size_t box_num{ (box_row_num * dim) + i };
+    out_string.append(u8" ");
+    out_string.append(this->get_box_fill(box_num));
+    out_string.append(u8" ");
+    out_string.append(this->get_right_line(box_num));
+  }
+  out_string.append(u8"\n");
+  out_string.append(u8"·");
+  for (std::size_t i{0}; i < dim; ++i) {
+    const std::size_t box_num{ (box_row_num * dim) + i };
+    out_string.append(u8" ");
+    out_string.append(this->get_bottom_line(box_num));
+    out_string.append(u8" ");
+    out_string.append(u8"·");
+  }
+  return out_string;
 }
 

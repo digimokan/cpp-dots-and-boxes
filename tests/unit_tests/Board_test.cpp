@@ -5,6 +5,12 @@
 #include "doctest.h"
 
 /*******************************************************************************
+* SYSTEM INCLUDES
+*******************************************************************************/
+
+#include <sstream>
+
+/*******************************************************************************
 * USER INCLUDES
 *******************************************************************************/
 
@@ -305,3 +311,157 @@ TEST_CASE("six boxes marked by two players, with extra lines") {
 
 }
 
+TEST_CASE("operator<<") {
+
+  std::stringstream out_board;
+
+  SUBCASE("1 x 1 board, empty") {
+    Board board{ 1 };
+    out_board << board;
+    std::string expected_board{
+      u8"·   ·\n"
+      u8"     \n"
+      u8"·   ·"
+    };
+    CHECK_EQ(out_board.str(), expected_board);
+  }
+
+  SUBCASE("1 x 1 board, filled by one player") {
+    Board board{ 1 };
+    for (std::size_t i{0}; i < board.get_max_lines(); ++i)
+      board.mark_line(Player::ONE, i);
+    out_board << board;
+    std::string expected_board{
+      u8"· ― ·\n"
+      u8"| 1 |\n"
+      u8"· ― ·"
+    };
+    CHECK_EQ(out_board.str(), expected_board);
+  }
+
+  SUBCASE("2 x 2 board, empty") {
+    Board board{ 2 };
+    out_board << board;
+    std::string expected_board{
+      u8"·   ·   ·\n"
+      u8"         \n"
+      u8"·   ·   ·\n"
+      u8"         \n"
+      u8"·   ·   ·"
+    };
+    CHECK_EQ(out_board.str(), expected_board);
+  }
+
+  SUBCASE("2 x 2 board, three boxes filled by two players") {
+    Board board{ 2 };
+    board.mark_line(Player::ONE, 0);
+    board.mark_line(Player::ONE, 2);
+    board.mark_line(Player::ONE, 5);
+    board.mark_line(Player::ONE, 1);
+    board.mark_line(Player::ONE, 4);
+    board.mark_line(Player::ONE, 6);
+    board.mark_line(Player::COMPUTER, 7);
+    board.mark_line(Player::COMPUTER, 8);
+    board.mark_line(Player::COMPUTER, 10);
+    board.mark_line(Player::ONE, 3);
+    out_board << board;
+    std::string expected_board{
+      u8"· ― · ― ·\n"
+      u8"| 1 | 1 |\n"
+      u8"· ― · ― ·\n"
+      u8"| C |    \n"
+      u8"· ― ·   ·"
+    };
+    CHECK_EQ(out_board.str(), expected_board);
+  }
+
+  SUBCASE("3 x 3 board, empty") {
+    Board board{ 3 };
+    out_board << board;
+    std::string expected_board{
+      u8"·   ·   ·   ·\n"
+      u8"             \n"
+      u8"·   ·   ·   ·\n"
+      u8"             \n"
+      u8"·   ·   ·   ·\n"
+      u8"             \n"
+      u8"·   ·   ·   ·"
+    };
+    CHECK_EQ(out_board.str(), expected_board);
+  }
+
+  SUBCASE("3 x 3 board, all lines marked by one player") {
+    Board board{ 3 };
+    for (std::size_t i{0}; i < board.get_max_lines(); ++i)
+      board.mark_line(Player::ONE, i);
+    out_board << board;
+    std::string expected_board{
+      u8"· ― · ― · ― ·\n"
+      u8"| 1 | 1 | 1 |\n"
+      u8"· ― · ― · ― ·\n"
+      u8"| 1 | 1 | 1 |\n"
+      u8"· ― · ― · ― ·\n"
+      u8"| 1 | 1 | 1 |\n"
+      u8"· ― · ― · ― ·"
+    };
+    CHECK_EQ(out_board.str(), expected_board);
+  }
+
+  SUBCASE("3 x 3 board, three boxes marked by one player") {
+    Board board{ 3 };
+    for (std::size_t i{0}; i < 10; ++i)
+      board.mark_line(Player::ONE, i);
+    out_board << board;
+    std::string expected_board{
+      u8"· ― · ― · ― ·\n"
+      u8"| 1 | 1 | 1 |\n"
+      u8"· ― · ― · ― ·\n"
+      u8"             \n"
+      u8"·   ·   ·   ·\n"
+      u8"             \n"
+      u8"·   ·   ·   ·"
+    };
+    CHECK_EQ(out_board.str(), expected_board);
+  }
+
+  SUBCASE("3 x 3 board, six boxes marked by two players") {
+    Board board{ 3 };
+    for (std::size_t i{0}; i < 10; ++i)
+      board.mark_line(Player::ONE, i);
+    for (std::size_t i{14}; i < board.get_max_lines(); ++i)
+      board.mark_line(Player::COMPUTER, i);
+    out_board << board;
+    std::string expected_board{
+      u8"· ― · ― · ― ·\n"
+      u8"| 1 | 1 | 1 |\n"
+      u8"· ― · ― · ― ·\n"
+      u8"             \n"
+      u8"· ― · ― · ― ·\n"
+      u8"| C | C | C |\n"
+      u8"· ― · ― · ― ·"
+    };
+    CHECK_EQ(out_board.str(), expected_board);
+  }
+
+  SUBCASE("3 x 3 board, six boxes marked by two players, with extra lines") {
+    Board board{ 3 };
+    for (std::size_t i{0}; i < 10; ++i)
+      board.mark_line(Player::ONE, i);
+    for (std::size_t i{14}; i < board.get_max_lines(); ++i)
+      board.mark_line(Player::COMPUTER, i);
+    board.mark_line(Player::ONE, 11);
+    board.mark_line(Player::COMPUTER, 13);
+    out_board << board;
+    std::string expected_board{
+      u8"· ― · ― · ― ·\n"
+      u8"| 1 | 1 | 1 |\n"
+      u8"· ― · ― · ― ·\n"
+      u8"    |       |\n"
+      u8"· ― · ― · ― ·\n"
+      u8"| C | C | C |\n"
+      u8"· ― · ― · ― ·"
+    };
+    CHECK_EQ(out_board.str(), expected_board);
+  }
+
+}

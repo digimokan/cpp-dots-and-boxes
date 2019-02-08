@@ -14,7 +14,9 @@ purpose:  a dots and boxes board
 
 #include <cstddef>
 #include <functional>
+#include <iostream>
 #include <memory>
+#include <string>
 
 /*******************************************************************************
 * USER INCLUDES
@@ -62,6 +64,9 @@ public:
   void for_each_player_boxmark (Player player, const std::function<void(std::size_t box_num)>& act_on_box_num) const;
   bool is_completed () const;
 
+  // friend class methods
+  friend std::ostream& operator<< (std::ostream& os, const Board& board);
+
 private:
 
   // fields
@@ -72,6 +77,15 @@ private:
 
   // helper methods
   void check_and_mark_box (std::size_t box_num, Player player);
+  std::size_t get_board_dimensions () const;
+  std::size_t get_num_boxes () const;
+  std::string get_top_line (std::size_t box_num) const;
+  std::string get_bottom_line (std::size_t box_num) const;
+  std::string get_left_line (std::size_t box_num) const;
+  std::string get_right_line (std::size_t box_num) const;
+  std::string get_box_fill (std::size_t box_num) const;
+  std::string first_box_row_string () const;
+  std::string box_row_string (std::size_t box_row_num) const;
 
 };
 
