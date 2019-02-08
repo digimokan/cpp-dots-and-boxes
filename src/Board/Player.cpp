@@ -5,9 +5,6 @@ date:     04 FEB 2019
 purpose:  a player ("player one" or "computer") in a dots and boxes game
 *******************************************************************************/
 
-#ifndef PLAYER_HPP
-#define PLAYER_HPP 1
-
 /*******************************************************************************
 * SYSTEM INCLUDES
 *******************************************************************************/
@@ -15,27 +12,27 @@ purpose:  a player ("player one" or "computer") in a dots and boxes game
 #include <iostream>
 
 /*******************************************************************************
-* INTERFACE
+* USER INCLUDES
 *******************************************************************************/
 
-// types
-enum class Player {
-  ONE,
-  COMPUTER
-};
-
-// iterating
-const Player PlayerVals[] = {
-  Player::ONE,
-  Player::COMPUTER
-};
-
-// specialized methods
-std::ostream& operator<< (std::ostream& os, const Player& player);
+#include "Player.hpp"
 
 /*******************************************************************************
-* END
+* SPECIALIZED METHODS
 *******************************************************************************/
 
-#endif // PLAYER_HPP
+std::ostream& operator<< (std::ostream& os, const Player& player) {
+  switch (player) {
+    case Player::ONE:
+      os << u8"1";
+      break;
+    case Player::COMPUTER:
+      os << u8"C";
+      break;
+    default:
+      os << u8"?";
+      break;
+  }
+  return os;
+}
 
