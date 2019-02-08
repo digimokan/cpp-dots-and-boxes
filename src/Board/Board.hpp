@@ -29,6 +29,7 @@ purpose:  a dots and boxes board
 
 class BoxToLinesMap;
 class LineToBoxesMap;
+enum class Player;
 
 /*******************************************************************************
 * INTERFACE
@@ -52,7 +53,12 @@ public:
   Board& operator= (Board&& rh) = default;
 
   // specialized methods
+  std::size_t get_max_lines () const;
+  void mark_line (Player player, std::size_t line_num);
+  bool is_line_marked (std::size_t line_num) const;
   void for_each_unmarked_line_num (const std::function<void(std::size_t line_num)>& act_on_line_num) const;
+  bool is_box_marked (std::size_t box_num) const;
+  Player get_box_mark (std::size_t box_num) const;
   bool is_completed () const;
 
 private:
@@ -62,6 +68,9 @@ private:
   BoxMarks box_marks;
   std::shared_ptr<const BoxToLinesMap> blmap;
   std::shared_ptr<const LineToBoxesMap> lbmap;
+
+  // helper methods
+  void check_and_mark_box (std::size_t box_num, Player player);
 
 };
 
