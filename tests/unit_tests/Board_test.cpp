@@ -39,6 +39,22 @@ TEST_CASE("no lines marked") {
       CHECK_FALSE(board.is_box_marked(i));
   }
 
+  SUBCASE("for_each_player_boxmark(player_one, lambda)") {
+    constexpr std::size_t expected_sum{ 0 };
+    std::size_t sum{ 0 };
+    auto add_to_sum{ [&sum] (auto box_num) { sum += box_num; } };
+    board.for_each_player_boxmark(Player::ONE, add_to_sum);
+    CHECK_EQ(sum, expected_sum);
+  }
+
+  SUBCASE("for_each_player_boxmark(computer, lambda)") {
+    constexpr std::size_t expected_sum{ 0 };
+    std::size_t sum{ 0 };
+    auto add_to_sum{ [&sum] (auto box_num) { sum += box_num; } };
+    board.for_each_player_boxmark(Player::COMPUTER, add_to_sum);
+    CHECK_EQ(sum, expected_sum);
+  }
+
   SUBCASE("is_completed()") {
     CHECK_FALSE(board.is_completed());
   }
@@ -74,6 +90,22 @@ TEST_CASE("all lines marked by one player") {
   SUBCASE("get_box_mark()") {
     for (std::size_t i{0}; i < num_boxes; ++i)
       CHECK_EQ(board.get_box_mark(i), Player::ONE);
+  }
+
+  SUBCASE("for_each_player_boxmark(player_one, lambda)") {
+    constexpr std::size_t expected_sum{ 36 };
+    std::size_t sum{ 0 };
+    auto add_to_sum{ [&sum] (auto box_num) { sum += box_num; } };
+    board.for_each_player_boxmark(Player::ONE, add_to_sum);
+    CHECK_EQ(sum, expected_sum);
+  }
+
+  SUBCASE("for_each_player_boxmark(computer, lambda)") {
+    constexpr std::size_t expected_sum{ 0 };
+    std::size_t sum{ 0 };
+    auto add_to_sum{ [&sum] (auto box_num) { sum += box_num; } };
+    board.for_each_player_boxmark(Player::COMPUTER, add_to_sum);
+    CHECK_EQ(sum, expected_sum);
   }
 
   SUBCASE("is_completed()") {
@@ -115,6 +147,22 @@ TEST_CASE("three boxes marked by one player") {
   SUBCASE("get_box_mark()") {
     for (std::size_t i{0}; i < 3; ++i)
       CHECK_EQ(board.get_box_mark(i), Player::ONE);
+  }
+
+  SUBCASE("for_each_player_boxmark(player_one, lambda)") {
+    constexpr std::size_t expected_sum{ 3 };
+    std::size_t sum{ 0 };
+    auto add_to_sum{ [&sum] (auto box_num) { sum += box_num; } };
+    board.for_each_player_boxmark(Player::ONE, add_to_sum);
+    CHECK_EQ(sum, expected_sum);
+  }
+
+  SUBCASE("for_each_player_boxmark(computer, lambda)") {
+    constexpr std::size_t expected_sum{ 0 };
+    std::size_t sum{ 0 };
+    auto add_to_sum{ [&sum] (auto box_num) { sum += box_num; } };
+    board.for_each_player_boxmark(Player::COMPUTER, add_to_sum);
+    CHECK_EQ(sum, expected_sum);
   }
 
   SUBCASE("is_completed()") {
@@ -164,6 +212,22 @@ TEST_CASE("six boxes marked by two players") {
       CHECK_EQ(board.get_box_mark(i), Player::ONE);
     for (std::size_t i{6}; i < num_boxes; ++i)
       CHECK_EQ(board.get_box_mark(i), Player::COMPUTER);
+  }
+
+  SUBCASE("for_each_player_boxmark(player_one, lambda)") {
+    constexpr std::size_t expected_sum{ 3 };
+    std::size_t sum{ 0 };
+    auto add_to_sum{ [&sum] (auto box_num) { sum += box_num; } };
+    board.for_each_player_boxmark(Player::ONE, add_to_sum);
+    CHECK_EQ(sum, expected_sum);
+  }
+
+  SUBCASE("for_each_player_boxmark(computer, lambda)") {
+    constexpr std::size_t expected_sum{ 21 };
+    std::size_t sum{ 0 };
+    auto add_to_sum{ [&sum] (auto box_num) { sum += box_num; } };
+    board.for_each_player_boxmark(Player::COMPUTER, add_to_sum);
+    CHECK_EQ(sum, expected_sum);
   }
 
   SUBCASE("is_completed()") {
@@ -217,6 +281,22 @@ TEST_CASE("six boxes marked by two players, with extra lines") {
       CHECK_EQ(board.get_box_mark(i), Player::ONE);
     for (std::size_t i{6}; i < num_boxes; ++i)
       CHECK_EQ(board.get_box_mark(i), Player::COMPUTER);
+  }
+
+  SUBCASE("for_each_player_boxmark(player_one, lambda)") {
+    constexpr std::size_t expected_sum{ 3 };
+    std::size_t sum{ 0 };
+    auto add_to_sum{ [&sum] (auto box_num) { sum += box_num; } };
+    board.for_each_player_boxmark(Player::ONE, add_to_sum);
+    CHECK_EQ(sum, expected_sum);
+  }
+
+  SUBCASE("for_each_player_boxmark(computer, lambda)") {
+    constexpr std::size_t expected_sum{ 21 };
+    std::size_t sum{ 0 };
+    auto add_to_sum{ [&sum] (auto box_num) { sum += box_num; } };
+    board.for_each_player_boxmark(Player::COMPUTER, add_to_sum);
+    CHECK_EQ(sum, expected_sum);
   }
 
   SUBCASE("is_completed()") {

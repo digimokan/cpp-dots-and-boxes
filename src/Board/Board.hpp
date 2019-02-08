@@ -59,6 +59,7 @@ public:
   void for_each_unmarked_line_num (const std::function<void(std::size_t line_num)>& act_on_line_num) const;
   bool is_box_marked (std::size_t box_num) const;
   Player get_box_mark (std::size_t box_num) const;
+  void for_each_player_boxmark (Player player, const std::function<void(std::size_t box_num)>& act_on_box_num) const;
   bool is_completed () const;
 
 private:

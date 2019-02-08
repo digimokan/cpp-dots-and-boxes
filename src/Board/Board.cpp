@@ -65,6 +65,11 @@ Player Board::get_box_mark (std::size_t box_num) const {
   return this->box_marks.get_mark(box_num);
 }
 
+void Board::for_each_player_boxmark (Player player,
+    const std::function<void(std::size_t box_num)>& act_on_box_num) const {
+  this->box_marks.for_each_player_boxmark(player, act_on_box_num);
+}
+
 bool Board::is_completed () const {
   return this->lines.all_marked();
 }
