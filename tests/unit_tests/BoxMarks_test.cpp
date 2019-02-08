@@ -153,6 +153,11 @@ TEST_CASE("all boxes marked by one player") {
     CHECK_EQ(computer_sum, expected_computer_sum);
   }
 
+  SUBCASE("get_mark(box_num)") {
+    for (std::size_t i{0}; i < num_boxes; ++i)
+      CHECK_EQ(box_marks.get_mark(i), Player::ONE);
+  }
+
 }
 
 TEST_CASE("all boxes marked by two players") {
@@ -198,6 +203,13 @@ TEST_CASE("all boxes marked by two players") {
     auto add_to_computer_sum = [&computer_sum] (auto box_num) { computer_sum += box_num; };
     box_marks.for_each_player_boxmark(Player::COMPUTER, add_to_computer_sum);
     CHECK_EQ(computer_sum, expected_computer_sum);
+  }
+
+  SUBCASE("get_mark(box_num)") {
+    for (std::size_t i{0}; i < 5; ++i)
+      CHECK_EQ(box_marks.get_mark(i), Player::ONE);
+    for (std::size_t i{5}; i < num_boxes; ++i)
+      CHECK_EQ(box_marks.get_mark(i), Player::COMPUTER);
   }
 
 }
@@ -251,6 +263,13 @@ TEST_CASE("some boxes marked by two players") {
     auto add_to_computer_sum = [&computer_sum] (auto box_num) { computer_sum += box_num; };
     box_marks.for_each_player_boxmark(Player::COMPUTER, add_to_computer_sum);
     CHECK_EQ(computer_sum, expected_computer_sum);
+  }
+
+  SUBCASE("get_mark(box_num)") {
+    for (std::size_t i{0}; i < 3; ++i)
+      CHECK_EQ(box_marks.get_mark(i), Player::ONE);
+    for (std::size_t i{3}; i < 6; ++i)
+      CHECK_EQ(box_marks.get_mark(i), Player::COMPUTER);
   }
 
 }

@@ -51,6 +51,11 @@ bool BoxMarks::not_marked (std::size_t box_num) const {
   return (! this->is_marked(box_num));
 }
 
+Player BoxMarks::get_mark (std::size_t box_num) const {
+  assert(this->is_marked(box_num));
+  return this->marks.at(box_num);
+}
+
 void BoxMarks::mark (std::size_t box_num, Player player) {
   assert(! this->unmarked_boxnums.empty());
   assert(this->marks.count(box_num) == 0);
