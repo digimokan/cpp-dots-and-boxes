@@ -34,8 +34,9 @@ Board::Board (std::size_t dimensions)
   : lines{ dimensions },
     box_marks{ dimensions },
     blmap{ std::make_shared<BoxToLinesMap>(dimensions) },
-    lbmap{ std::make_shared<LineToBoxesMap>(dimensions) }
-{ }
+    lbmap{ std::make_shared<LineToBoxesMap>(dimensions) } {
+  assert(dimensions <= this->get_max_dimensions());
+}
 
 /*******************************************************************************
 * SPECIALIZED METHODS
@@ -83,11 +84,9 @@ bool Board::is_completed () const {
 
 std::ostream& operator<< (std::ostream& os, const Board& board) {
   const std::size_t dim{ board.get_board_dimensions() };
-
   os << board.first_box_row_string();
   for (std::size_t box_row{0}; box_row < dim; ++box_row)
     os << board.box_row_string(box_row);
-
   return os;
 }
 

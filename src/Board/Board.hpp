@@ -55,6 +55,7 @@ public:
   Board& operator= (Board&& rh) = default;
 
   // specialized methods
+  constexpr std::size_t get_max_dimensions () { return 24; }
   std::size_t get_max_lines () const;
   void mark_line (Player player, std::size_t line_num);
   bool is_line_marked (std::size_t line_num) const;
