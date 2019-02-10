@@ -465,3 +465,60 @@ TEST_CASE("operator<<") {
   }
 
 }
+
+TEST_CASE("get_line_num(row_col_code)") {
+
+  SUBCASE("1 x 1 board") {
+    Board board{ 1 };
+    CHECK_EQ(board.get_line_num(std::string{"AB"}), 0);
+    CHECK_EQ(board.get_line_num(std::string{"BA"}), 1);
+    CHECK_EQ(board.get_line_num(std::string{"BC"}), 2);
+    CHECK_EQ(board.get_line_num(std::string{"CB"}), 3);
+  }
+
+  SUBCASE("2 x 2 board") {
+    Board board{ 2 };
+    CHECK_EQ(board.get_line_num(std::string{"AB"}), 0);
+    CHECK_EQ(board.get_line_num(std::string{"AD"}), 1);
+    CHECK_EQ(board.get_line_num(std::string{"BA"}), 2);
+    CHECK_EQ(board.get_line_num(std::string{"BC"}), 3);
+    CHECK_EQ(board.get_line_num(std::string{"BE"}), 4);
+    CHECK_EQ(board.get_line_num(std::string{"CB"}), 5);
+    CHECK_EQ(board.get_line_num(std::string{"CD"}), 6);
+    CHECK_EQ(board.get_line_num(std::string{"DA"}), 7);
+    CHECK_EQ(board.get_line_num(std::string{"DC"}), 8);
+    CHECK_EQ(board.get_line_num(std::string{"DE"}), 9);
+    CHECK_EQ(board.get_line_num(std::string{"EB"}), 10);
+    CHECK_EQ(board.get_line_num(std::string{"ED"}), 11);
+  }
+
+  SUBCASE("3 x 3 board") {
+    Board board{ 3 };
+    CHECK_EQ(board.get_line_num(std::string{"AB"}), 0);
+    CHECK_EQ(board.get_line_num(std::string{"AD"}), 1);
+    CHECK_EQ(board.get_line_num(std::string{"AF"}), 2);
+    CHECK_EQ(board.get_line_num(std::string{"BA"}), 3);
+    CHECK_EQ(board.get_line_num(std::string{"BC"}), 4);
+    CHECK_EQ(board.get_line_num(std::string{"BE"}), 5);
+    CHECK_EQ(board.get_line_num(std::string{"BG"}), 6);
+    CHECK_EQ(board.get_line_num(std::string{"CB"}), 7);
+    CHECK_EQ(board.get_line_num(std::string{"CD"}), 8);
+    CHECK_EQ(board.get_line_num(std::string{"CF"}), 9);
+    CHECK_EQ(board.get_line_num(std::string{"DA"}), 10);
+    CHECK_EQ(board.get_line_num(std::string{"DC"}), 11);
+    CHECK_EQ(board.get_line_num(std::string{"DE"}), 12);
+    CHECK_EQ(board.get_line_num(std::string{"DG"}), 13);
+    CHECK_EQ(board.get_line_num(std::string{"EB"}), 14);
+    CHECK_EQ(board.get_line_num(std::string{"ED"}), 15);
+    CHECK_EQ(board.get_line_num(std::string{"EF"}), 16);
+    CHECK_EQ(board.get_line_num(std::string{"FA"}), 17);
+    CHECK_EQ(board.get_line_num(std::string{"FC"}), 18);
+    CHECK_EQ(board.get_line_num(std::string{"FE"}), 19);
+    CHECK_EQ(board.get_line_num(std::string{"FG"}), 20);
+    CHECK_EQ(board.get_line_num(std::string{"GB"}), 21);
+    CHECK_EQ(board.get_line_num(std::string{"GD"}), 22);
+    CHECK_EQ(board.get_line_num(std::string{"GF"}), 23);
+  }
+
+}
+

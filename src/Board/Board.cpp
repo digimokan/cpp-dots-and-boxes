@@ -78,6 +78,13 @@ bool Board::is_completed () const {
   return this->lines.all_marked();
 }
 
+std::size_t Board::get_line_num (const std::string& row_col_code) const {
+  std::size_t row_index{ this->get_label_index(row_col_code.at(0)) };
+  std::size_t col_index{ this->get_label_index(row_col_code.at(1)) };
+  const std::size_t dim{ this->get_board_dimensions() };
+  return ( (row_index * dim) + (row_index / 2) + (col_index / 2) );
+}
+
 /*******************************************************************************
 * FRIEND CLASS METHODS
 *******************************************************************************/
@@ -175,5 +182,16 @@ std::string Board::box_row_string (std::size_t box_row_num) const {
     out_string.append(u8"·");
   }
   return out_string;
+}
+
+const std::string& Board::get_hdr_labels () const {
+  static const std::string labels{ "ABCDEFGHIJKLMNOPQRSTUVWXYZ" };
+  return labels;
+}
+
+std::size_t Board::get_label_index (char row_code) const {
+  std::size_t code_pos{ this->get_hdr_labels().find(row_code) };
+  assert(code_pos != std::string::npos);
+  return code_pos;
 }
 
