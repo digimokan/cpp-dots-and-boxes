@@ -531,3 +531,120 @@ TEST_CASE("get_line_num(row_col_code)") {
 
 }
 
+TEST_CASE("is_row_col_code_valid(row_col_code)") {
+
+  SUBCASE("1 x 1 board") {
+    Board board{ 1 };
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"AA"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"AB"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"AC"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"BA"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"BB"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"BC"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"CA"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"CB"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"CC"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"cb"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"ABC"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"AD"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"DA"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"A3"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"3A"}));
+  }
+
+  SUBCASE("2 x 2 board") {
+    Board board{ 2 };
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"AA"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"AB"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"AC"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"AD"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"AE"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"BA"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"BB"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"BC"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"BD"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"BE"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"CA"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"CB"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"CC"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"CD"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"CE"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"DA"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"DB"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"DC"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"DD"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"DE"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"EA"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"EB"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"EC"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"ED"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"EE"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"ed"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"ABC"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"AF"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"FA"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"A3"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"3A"}));
+  }
+
+  SUBCASE("3 x 3 board") {
+    Board board{ 3 };
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"AA"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"AB"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"AC"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"AD"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"AE"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"AF"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"AG"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"BA"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"BB"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"BC"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"BD"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"BE"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"BF"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"BG"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"CA"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"CB"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"CC"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"CD"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"CE"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"CF"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"CG"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"DA"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"DB"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"DC"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"DD"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"DE"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"DF"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"DG"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"EA"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"EB"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"EC"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"ED"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"EE"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"EF"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"EG"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"FA"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"FB"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"FC"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"FD"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"FE"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"FF"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"FG"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"GA"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"GB"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"GC"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"GD"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"GE"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"GF"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"GG"}));
+    CHECK_UNARY(board.is_row_col_code_valid(std::string{"gf"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"ABC"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"AH"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"HA"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"A3"}));
+    CHECK_FALSE(board.is_row_col_code_valid(std::string{"3A"}));
+  }
+
+}
+

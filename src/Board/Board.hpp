@@ -65,6 +65,7 @@ public:
   void for_each_player_boxmark (Player player, const std::function<void(std::size_t box_num)>& act_on_box_num) const;
   bool is_completed () const;
   std::size_t get_line_num (const std::string& row_col_code) const;
+  bool is_row_col_code_valid (const std::string& row_col_code) const;
 
   // friend class methods
   friend std::ostream& operator<< (std::ostream& os, const Board& board);

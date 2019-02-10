@@ -9,6 +9,7 @@ purpose:  a dots and boxes board
 * SYSTEM INCLUDES
 *******************************************************************************/
 
+#include <algorithm>
 #include <cassert>
 #include <cstddef>
 #include <functional>
@@ -83,6 +84,28 @@ std::size_t Board::get_line_num (const std::string& row_col_code) const {
   std::size_t col_index{ this->get_label_index(row_col_code.at(1)) };
   const std::size_t dim{ this->get_board_dimensions() };
   return ( (row_index * dim) + (row_index / 2) + (col_index / 2) );
+}
+
+bool Board::is_row_col_code_valid (const std::string& row_col_code) const {
+  const std::size_t dim{ this->get_board_dimensions() };
+  std::string uc{};
+  uc.resize(row_col_code.size());
+  std::transform(row_col_code.cbegin(), row_col_code.cend(), uc.begin(), ::toupper);
+  if (uc.size() != 2)
+    return false;
+  if (this->get_hdr_labels().find(uc.at(0)) == std::string::npos)
+    return false;
+  if (this->get_hdr_labels().find(uc.at(1)) == std::string::npos)
+    return false;
+  const std::size_t row_pos{ this->get_hdr_labels().find(uc.at(0)) };
+  const std::size_t col_pos{ this->get_hdr_labels().find(uc.at(1)) };
+  if (row_pos > (dim * 2))
+    return false;
+  if (col_pos > (dim * 2))
+    return false;
+  if ((row_pos % 2) == (col_pos % 2))
+    return false;
+  return true;
 }
 
 /*******************************************************************************
@@ -210,7 +233,7 @@ const std::string& Board::get_hdr_labels () const {
 }
 
 std::size_t Board::get_label_index (char code) const {
-  std::size_t code_pos{ this->get_hdr_labels().find(code) };
+  const std::size_t code_pos{ this->get_hdr_labels().find(code) };
   assert(code_pos != std::string::npos);
   return code_pos;
 }
