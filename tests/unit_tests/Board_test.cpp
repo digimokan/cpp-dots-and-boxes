@@ -483,6 +483,7 @@ TEST_CASE("get_line_num(row_col_code)") {
     CHECK_EQ(board.get_line_num(std::string{"BA"}), 1);
     CHECK_EQ(board.get_line_num(std::string{"BC"}), 2);
     CHECK_EQ(board.get_line_num(std::string{"CB"}), 3);
+    CHECK_EQ(board.get_line_num(std::string{"cb"}), 3);
   }
 
   SUBCASE("2 x 2 board") {
@@ -499,6 +500,7 @@ TEST_CASE("get_line_num(row_col_code)") {
     CHECK_EQ(board.get_line_num(std::string{"DE"}), 9);
     CHECK_EQ(board.get_line_num(std::string{"EB"}), 10);
     CHECK_EQ(board.get_line_num(std::string{"ED"}), 11);
+    CHECK_EQ(board.get_line_num(std::string{"ed"}), 11);
   }
 
   SUBCASE("3 x 3 board") {
@@ -527,6 +529,7 @@ TEST_CASE("get_line_num(row_col_code)") {
     CHECK_EQ(board.get_line_num(std::string{"GB"}), 21);
     CHECK_EQ(board.get_line_num(std::string{"GD"}), 22);
     CHECK_EQ(board.get_line_num(std::string{"GF"}), 23);
+    CHECK_EQ(board.get_line_num(std::string{"gf"}), 23);
   }
 
 }

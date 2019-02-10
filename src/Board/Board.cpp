@@ -80,8 +80,11 @@ bool Board::is_completed () const {
 }
 
 std::size_t Board::get_line_num (const std::string& row_col_code) const {
-  std::size_t row_index{ this->get_label_index(row_col_code.at(0)) };
-  std::size_t col_index{ this->get_label_index(row_col_code.at(1)) };
+  std::string uc{};
+  uc.resize(row_col_code.size());
+  std::transform(row_col_code.cbegin(), row_col_code.cend(), uc.begin(), ::toupper);
+  std::size_t row_index{ this->get_label_index(uc.at(0)) };
+  std::size_t col_index{ this->get_label_index(uc.at(1)) };
   const std::size_t dim{ this->get_board_dimensions() };
   return ( (row_index * dim) + (row_index / 2) + (col_index / 2) );
 }
