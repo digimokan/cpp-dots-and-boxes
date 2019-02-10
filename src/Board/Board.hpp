@@ -86,10 +86,11 @@ private:
   std::string get_left_line (std::size_t box_num) const;
   std::string get_right_line (std::size_t box_num) const;
   std::string get_box_fill (std::size_t box_num) const;
+  std::string row_label_string () const;
   std::string first_box_row_string () const;
   std::string box_row_string (std::size_t box_row_num) const;
   const std::string& get_hdr_labels () const;
-  std::size_t get_label_index (char row_code) const;
+  std::size_t get_label_index (char code) const;
 
 };
 

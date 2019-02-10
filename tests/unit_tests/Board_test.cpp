@@ -319,9 +319,10 @@ TEST_CASE("operator<<") {
     Board board{ 1 };
     out_board << board;
     std::string expected_board{
-      u8"·   ·\n"
-      u8"     \n"
-      u8"·   ·"
+      u8"  A B C\n"
+      u8"A ·   ·\n"
+      u8"B      \n"
+      u8"C ·   ·"
     };
     CHECK_EQ(out_board.str(), expected_board);
   }
@@ -332,9 +333,10 @@ TEST_CASE("operator<<") {
       board.mark_line(Player::ONE, i);
     out_board << board;
     std::string expected_board{
-      u8"· ― ·\n"
-      u8"| 1 |\n"
-      u8"· ― ·"
+      u8"  A B C\n"
+      u8"A · ― ·\n"
+      u8"B | 1 |\n"
+      u8"C · ― ·"
     };
     CHECK_EQ(out_board.str(), expected_board);
   }
@@ -343,11 +345,12 @@ TEST_CASE("operator<<") {
     Board board{ 2 };
     out_board << board;
     std::string expected_board{
-      u8"·   ·   ·\n"
-      u8"         \n"
-      u8"·   ·   ·\n"
-      u8"         \n"
-      u8"·   ·   ·"
+      u8"  A B C D E\n"
+      u8"A ·   ·   ·\n"
+      u8"B          \n"
+      u8"C ·   ·   ·\n"
+      u8"D          \n"
+      u8"E ·   ·   ·"
     };
     CHECK_EQ(out_board.str(), expected_board);
   }
@@ -366,11 +369,12 @@ TEST_CASE("operator<<") {
     board.mark_line(Player::ONE, 3);
     out_board << board;
     std::string expected_board{
-      u8"· ― · ― ·\n"
-      u8"| 1 | 1 |\n"
-      u8"· ― · ― ·\n"
-      u8"| C |    \n"
-      u8"· ― ·   ·"
+      u8"  A B C D E\n"
+      u8"A · ― · ― ·\n"
+      u8"B | 1 | 1 |\n"
+      u8"C · ― · ― ·\n"
+      u8"D | C |    \n"
+      u8"E · ― ·   ·"
     };
     CHECK_EQ(out_board.str(), expected_board);
   }
@@ -379,13 +383,14 @@ TEST_CASE("operator<<") {
     Board board{ 3 };
     out_board << board;
     std::string expected_board{
-      u8"·   ·   ·   ·\n"
-      u8"             \n"
-      u8"·   ·   ·   ·\n"
-      u8"             \n"
-      u8"·   ·   ·   ·\n"
-      u8"             \n"
-      u8"·   ·   ·   ·"
+      u8"  A B C D E F G\n"
+      u8"A ·   ·   ·   ·\n"
+      u8"B              \n"
+      u8"C ·   ·   ·   ·\n"
+      u8"D              \n"
+      u8"E ·   ·   ·   ·\n"
+      u8"F              \n"
+      u8"G ·   ·   ·   ·"
     };
     CHECK_EQ(out_board.str(), expected_board);
   }
@@ -396,13 +401,14 @@ TEST_CASE("operator<<") {
       board.mark_line(Player::ONE, i);
     out_board << board;
     std::string expected_board{
-      u8"· ― · ― · ― ·\n"
-      u8"| 1 | 1 | 1 |\n"
-      u8"· ― · ― · ― ·\n"
-      u8"| 1 | 1 | 1 |\n"
-      u8"· ― · ― · ― ·\n"
-      u8"| 1 | 1 | 1 |\n"
-      u8"· ― · ― · ― ·"
+      u8"  A B C D E F G\n"
+      u8"A · ― · ― · ― ·\n"
+      u8"B | 1 | 1 | 1 |\n"
+      u8"C · ― · ― · ― ·\n"
+      u8"D | 1 | 1 | 1 |\n"
+      u8"E · ― · ― · ― ·\n"
+      u8"F | 1 | 1 | 1 |\n"
+      u8"G · ― · ― · ― ·"
     };
     CHECK_EQ(out_board.str(), expected_board);
   }
@@ -413,13 +419,14 @@ TEST_CASE("operator<<") {
       board.mark_line(Player::ONE, i);
     out_board << board;
     std::string expected_board{
-      u8"· ― · ― · ― ·\n"
-      u8"| 1 | 1 | 1 |\n"
-      u8"· ― · ― · ― ·\n"
-      u8"             \n"
-      u8"·   ·   ·   ·\n"
-      u8"             \n"
-      u8"·   ·   ·   ·"
+      u8"  A B C D E F G\n"
+      u8"A · ― · ― · ― ·\n"
+      u8"B | 1 | 1 | 1 |\n"
+      u8"C · ― · ― · ― ·\n"
+      u8"D              \n"
+      u8"E ·   ·   ·   ·\n"
+      u8"F              \n"
+      u8"G ·   ·   ·   ·"
     };
     CHECK_EQ(out_board.str(), expected_board);
   }
@@ -432,13 +439,14 @@ TEST_CASE("operator<<") {
       board.mark_line(Player::COMPUTER, i);
     out_board << board;
     std::string expected_board{
-      u8"· ― · ― · ― ·\n"
-      u8"| 1 | 1 | 1 |\n"
-      u8"· ― · ― · ― ·\n"
-      u8"             \n"
-      u8"· ― · ― · ― ·\n"
-      u8"| C | C | C |\n"
-      u8"· ― · ― · ― ·"
+      u8"  A B C D E F G\n"
+      u8"A · ― · ― · ― ·\n"
+      u8"B | 1 | 1 | 1 |\n"
+      u8"C · ― · ― · ― ·\n"
+      u8"D              \n"
+      u8"E · ― · ― · ― ·\n"
+      u8"F | C | C | C |\n"
+      u8"G · ― · ― · ― ·"
     };
     CHECK_EQ(out_board.str(), expected_board);
   }
@@ -453,13 +461,14 @@ TEST_CASE("operator<<") {
     board.mark_line(Player::COMPUTER, 13);
     out_board << board;
     std::string expected_board{
-      u8"· ― · ― · ― ·\n"
-      u8"| 1 | 1 | 1 |\n"
-      u8"· ― · ― · ― ·\n"
-      u8"    |       |\n"
-      u8"· ― · ― · ― ·\n"
-      u8"| C | C | C |\n"
-      u8"· ― · ― · ― ·"
+      u8"  A B C D E F G\n"
+      u8"A · ― · ― · ― ·\n"
+      u8"B | 1 | 1 | 1 |\n"
+      u8"C · ― · ― · ― ·\n"
+      u8"D     |       |\n"
+      u8"E · ― · ― · ― ·\n"
+      u8"F | C | C | C |\n"
+      u8"G · ― · ― · ― ·"
     };
     CHECK_EQ(out_board.str(), expected_board);
   }

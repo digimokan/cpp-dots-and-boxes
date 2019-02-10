@@ -91,6 +91,7 @@ std::size_t Board::get_line_num (const std::string& row_col_code) const {
 
 std::ostream& operator<< (std::ostream& os, const Board& board) {
   const std::size_t dim{ board.get_board_dimensions() };
+  os << board.row_label_string();
   os << board.first_box_row_string();
   for (std::size_t box_row{0}; box_row < dim; ++box_row)
     os << board.box_row_string(box_row);
@@ -147,9 +148,24 @@ std::string Board::get_box_fill (std::size_t box_num) const {
   return out_fill.str();
 }
 
+std::string Board::row_label_string () const {
+  const std::size_t dim{ this->get_board_dimensions() };
+  const std::size_t max_col_index{ (2 * dim) + 1 };
+  std::string out_string{};
+  out_string.append(u8" ");
+  for (std::size_t col_index{0}; col_index < max_col_index; ++col_index) {
+    out_string.append(u8" ");
+    out_string.push_back(this->get_hdr_labels().at(col_index));
+  }
+  return out_string;
+}
+
 std::string Board::first_box_row_string () const {
   const std::size_t dim{ this->get_board_dimensions() };
   std::string out_string{};
+  out_string.append(u8"\n");
+  out_string.append(u8"A");
+  out_string.append(u8" ");
   out_string.append(u8"·");
   for (std::size_t i{0}; i < dim; ++i) {
     out_string.append(u8" ");
@@ -164,6 +180,8 @@ std::string Board::box_row_string (std::size_t box_row_num) const {
   const std::size_t dim{ this->get_board_dimensions() };
   std::string out_string{};
   out_string.append(u8"\n");
+  out_string.push_back(this->get_hdr_labels().at(((box_row_num + 1) * 2) - 1));
+  out_string.append(u8" ");
   out_string.append(this->get_left_line(box_row_num * dim));
   for (std::size_t i{0}; i < dim; ++i) {
     const std::size_t box_num{ (box_row_num * dim) + i };
@@ -173,6 +191,8 @@ std::string Board::box_row_string (std::size_t box_row_num) const {
     out_string.append(this->get_right_line(box_num));
   }
   out_string.append(u8"\n");
+  out_string.push_back(this->get_hdr_labels().at((box_row_num + 1) * 2));
+  out_string.append(u8" ");
   out_string.append(u8"·");
   for (std::size_t i{0}; i < dim; ++i) {
     const std::size_t box_num{ (box_row_num * dim) + i };
@@ -189,8 +209,8 @@ const std::string& Board::get_hdr_labels () const {
   return labels;
 }
 
-std::size_t Board::get_label_index (char row_code) const {
-  std::size_t code_pos{ this->get_hdr_labels().find(row_code) };
+std::size_t Board::get_label_index (char code) const {
+  std::size_t code_pos{ this->get_hdr_labels().find(code) };
   assert(code_pos != std::string::npos);
   return code_pos;
 }
