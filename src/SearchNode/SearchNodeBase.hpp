@@ -12,8 +12,10 @@ purpose:  a base class impl of SearchNode
 * SYSTEM INCLUDES
 *******************************************************************************/
 
+#include <cstddef>
 #include <cstdint>
 #include <memory>
+#include <optional>
 
 /*******************************************************************************
 * USER INCLUDES
@@ -59,9 +61,17 @@ protected:
   // constructors
   SearchNodeBase (Board board, std::shared_ptr<ScoreIface> score_iface);
 
+  // specialized methods
+  void mark_line (Player player, std::size_t line_num);
+  std::optional<std::size_t> get_marked_line () const;
+
   // fields
   Board board;
   std::shared_ptr<ScoreIface> scorer;
+
+private:
+
+  std::optional<std::size_t> marked_line;
 
 };
 
