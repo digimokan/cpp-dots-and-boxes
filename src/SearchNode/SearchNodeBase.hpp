@@ -49,7 +49,7 @@ public:
   SearchNodeBase& operator= (SearchNodeBase&& rh) = default;
 
   // base / derived methods
-  bool is_terminal () final;
+  bool is_terminal () const final;
 
 protected:
 

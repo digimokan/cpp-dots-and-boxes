@@ -33,7 +33,7 @@ SearchNodeBase::SearchNodeBase (Board board, std::shared_ptr<ScoreIface> score_i
 * BASE / DERIVED METHODS
 *******************************************************************************/
 
-bool SearchNodeBase::is_terminal () {
+bool SearchNodeBase::is_terminal () const {
   return this->board.is_completed();
 }
 

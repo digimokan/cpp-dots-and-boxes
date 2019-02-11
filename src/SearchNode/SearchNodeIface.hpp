@@ -38,7 +38,7 @@ public:
   SearchNodeIface& operator= (SearchNodeIface&& rh) = default;
 
   // base / derived methods
-  virtual bool is_terminal () = 0;
+  virtual bool is_terminal () const = 0;
 
 protected:
 
