@@ -20,8 +20,10 @@
 class SNBMock : public SearchNodeBase {
 public:
   SNBMock (Board board, std::shared_ptr<ScoreIface> score_iface) : SearchNodeBase{std::move(board), std::move(score_iface)} { }
+  explicit SNBMock (const std::shared_ptr<SNBMock>& parent) : SearchNodeBase{parent} { }
   void mark_line_mock (Player player, std::size_t line_num) { this->mark_line(player, line_num); }
   std::optional<std::size_t> get_marked_line_mock () const { return this->get_marked_line(); }
+  void add_child_mock (const std::shared_ptr<SearchNodeBase>& child) { this->add_child(child); }
 };
 
 /*******************************************************************************
@@ -156,6 +158,105 @@ TEST_CASE("get_marked_line()") {
     node.mark_line_mock(Player::ONE, 3);
     CHECK_UNARY(node.get_marked_line_mock().has_value());
     CHECK_EQ(node.get_marked_line_mock(), 3);
+  }
+
+}
+
+TEST_CASE("add_child(child), get_parent()") {
+
+  constexpr std::size_t dimensions{ 3 };
+  auto scorer{ std::make_shared<ConstScore>() };
+  Board board{ dimensions };
+
+  SUBCASE("single node") {
+    auto node{ std::make_shared<SNBMock>(board, scorer) };
+    CHECK_FALSE(node->get_parent().has_value());
+    CHECK_EQ(node->get_parent(), std::nullopt);
+    CHECK_FALSE(node->has_parent());
+    CHECK_UNARY(node->not_has_parent());
+    CHECK_FALSE(node->has_children());
+    CHECK_UNARY(node->not_has_children());
+  }
+
+  SUBCASE("create 3 detached children") {
+    board.mark_line(Player::ONE, 0);
+    board.mark_line(Player::ONE, 1);
+    board.mark_line(Player::ONE, 2);
+    board.mark_line(Player::ONE, 3);
+    board.mark_line(Player::ONE, 5);
+    board.mark_line(Player::ONE, 7);
+    board.mark_line(Player::ONE, 8);
+    board.mark_line(Player::ONE, 9);
+    auto parent{ std::make_shared<SNBMock>(board, scorer) };
+    MARK_AS_USED(parent);
+    auto child_a{ std::make_shared<SNBMock>(parent) };
+    child_a->mark_line_mock(Player::ONE, 6);
+    auto child_b{ std::make_shared<SNBMock>(parent) };
+    child_b->mark_line_mock(Player::ONE, 4);
+    auto child_c{ std::make_shared<SNBMock>(parent) };
+    child_c->mark_line_mock(Player::ONE, 10);
+    CHECK_FALSE(parent->get_parent().has_value());
+    CHECK_EQ(parent->get_parent(), std::nullopt);
+    CHECK_FALSE(parent->has_parent());
+    CHECK_FALSE(parent->has_children());
+    CHECK_EQ(parent->calc_score(), 0);
+    CHECK_UNARY(child_a->get_parent().has_value());
+    CHECK_EQ(child_a->get_parent(), parent);
+    CHECK_UNARY(child_a->has_parent());
+    CHECK_FALSE(child_a->has_children());
+    CHECK_EQ(child_a->calc_score(), 1);
+    CHECK_UNARY(child_b->get_parent().has_value());
+    CHECK_EQ(child_b->get_parent(), parent);
+    CHECK_UNARY(child_b->has_parent());
+    CHECK_FALSE(child_b->has_children());
+    CHECK_EQ(child_b->calc_score(), 2);
+    CHECK_UNARY(child_c->get_parent().has_value());
+    CHECK_EQ(child_c->get_parent(), parent);
+    CHECK_UNARY(child_c->has_parent());
+    CHECK_FALSE(child_c->has_children());
+    CHECK_EQ(child_c->calc_score(), 0);
+  }
+
+  SUBCASE("create 3 children, add them to parent") {
+    board.mark_line(Player::ONE, 0);
+    board.mark_line(Player::ONE, 1);
+    board.mark_line(Player::ONE, 2);
+    board.mark_line(Player::ONE, 3);
+    board.mark_line(Player::ONE, 5);
+    board.mark_line(Player::ONE, 7);
+    board.mark_line(Player::ONE, 8);
+    board.mark_line(Player::ONE, 9);
+    auto parent{ std::make_shared<SNBMock>(board, scorer) };
+    MARK_AS_USED(parent);
+    auto child_a{ std::make_shared<SNBMock>(parent) };
+    child_a->mark_line_mock(Player::ONE, 6);
+    parent->add_child_mock(child_a);
+    auto child_b{ std::make_shared<SNBMock>(parent) };
+    child_b->mark_line_mock(Player::ONE, 4);
+    parent->add_child_mock(child_b);
+    auto child_c{ std::make_shared<SNBMock>(parent) };
+    child_c->mark_line_mock(Player::ONE, 10);
+    parent->add_child_mock(child_c);
+    CHECK_FALSE(parent->get_parent().has_value());
+    CHECK_EQ(parent->get_parent(), std::nullopt);
+    CHECK_FALSE(parent->has_parent());
+    CHECK_UNARY(parent->has_children());
+    CHECK_EQ(parent->calc_score(), 0);
+    CHECK_UNARY(child_a->get_parent().has_value());
+    CHECK_EQ(child_a->get_parent(), parent);
+    CHECK_UNARY(child_a->has_parent());
+    CHECK_FALSE(child_a->has_children());
+    CHECK_EQ(child_a->calc_score(), 1);
+    CHECK_UNARY(child_b->get_parent().has_value());
+    CHECK_EQ(child_b->get_parent(), parent);
+    CHECK_UNARY(child_b->has_parent());
+    CHECK_FALSE(child_b->has_children());
+    CHECK_EQ(child_b->calc_score(), 2);
+    CHECK_UNARY(child_c->get_parent().has_value());
+    CHECK_EQ(child_c->get_parent(), parent);
+    CHECK_UNARY(child_c->has_parent());
+    CHECK_FALSE(child_c->has_children());
+    CHECK_EQ(child_c->calc_score(), 0);
   }
 
 }
