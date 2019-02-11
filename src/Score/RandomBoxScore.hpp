@@ -51,7 +51,8 @@ public:
   RandomBoxScore& operator= (RandomBoxScore&& rh) = default;
 
   // base / derived methods
-  int64_t calc_score (const Board& board) final;
+  int64_t calc_score (const Board& board) const final;
+  int64_t calc_player_score (Player player, const Board& board) const final;
 
   // specialized methods
   int64_t get_random_box_score (std::size_t box_num) const;
@@ -60,7 +61,6 @@ private:
 
   // helper methods
   void init_box_scores (std::size_t dimensions);
-  int64_t calc_player_score (Player player, const Board& board) const;
 
 
   // fields

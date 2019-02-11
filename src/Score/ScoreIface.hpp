@@ -19,6 +19,7 @@ purpose:  given input board, return its [ Human - Computer ] score
 *******************************************************************************/
 
 class Board;
+enum class Player;
 
 /*******************************************************************************
 * INTERFACE
@@ -38,7 +39,8 @@ public:
   ScoreIface& operator= (ScoreIface&& rh) = default;
 
   // base / derived methods
-  virtual int64_t calc_score (const Board& board) = 0;
+  virtual int64_t calc_score (const Board& board) const = 0;
+  virtual int64_t calc_player_score (Player player, const Board& board) const = 0;
 
 protected:
 

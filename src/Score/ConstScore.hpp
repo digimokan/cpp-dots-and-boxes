@@ -49,12 +49,8 @@ public:
   ConstScore& operator= (ConstScore&& rh) = default;
 
   // base / derived methods
-  int64_t calc_score (const Board& board) final;
-
-private:
-
-  // helper methods
-  int64_t calc_player_score (Player player, const Board& board) const;
+  int64_t calc_score (const Board& board) const final;
+  int64_t calc_player_score (Player player, const Board& board) const final;
 
 };
 
