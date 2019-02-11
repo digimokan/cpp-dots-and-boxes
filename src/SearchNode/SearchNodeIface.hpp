@@ -39,6 +39,7 @@ public:
 
   // base / derived methods
   virtual bool is_terminal () const = 0;
+  virtual int64_t calc_score () const = 0;
 
 protected:
 

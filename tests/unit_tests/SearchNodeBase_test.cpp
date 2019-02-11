@@ -60,3 +60,39 @@ TEST_CASE("is_terminal()") {
 
 }
 
+TEST_CASE("calc_score()") {
+
+  constexpr std::size_t dimensions{ 3 };
+  auto scorer{ std::make_shared<ConstScore>() };
+  Board board{ dimensions };
+
+  SUBCASE("empty board") {
+    SNBMock node{ board, scorer };
+    CHECK_EQ(node.calc_score(), 0);
+  }
+
+  SUBCASE("all lines marked by one player") {
+    for (std::size_t i{0}; i < board.get_max_lines(); ++i)
+      board.mark_line(Player::ONE, i);
+    SNBMock node{ board, scorer };
+    CHECK_EQ(node.calc_score(), 9);
+  }
+
+  SUBCASE("three boxes marked by one player") {
+    for (std::size_t i{0}; i < 10; ++i)
+      board.mark_line(Player::ONE, i);
+    SNBMock node{ board, scorer };
+    CHECK_EQ(node.calc_score(), 3);
+  }
+
+  SUBCASE("six boxes marked by two players") {
+    for (std::size_t i{0}; i < 10; ++i)
+      board.mark_line(Player::ONE, i);
+    for (std::size_t i{14}; i < board.get_max_lines(); ++i)
+      board.mark_line(Player::COMPUTER, i);
+    SNBMock node{ board, scorer };
+    CHECK_EQ(node.calc_score(), 0);
+  }
+
+}
+

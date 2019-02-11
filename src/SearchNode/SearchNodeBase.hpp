@@ -50,6 +50,7 @@ public:
 
   // base / derived methods
   bool is_terminal () const final;
+  int64_t calc_score () const final;
 
 protected:
 

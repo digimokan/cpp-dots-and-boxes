@@ -37,3 +37,7 @@ bool SearchNodeBase::is_terminal () const {
   return this->board.is_completed();
 }
 
+int64_t SearchNodeBase::calc_score () const {
+  return this->scorer->calc_score(this->board);
+}
+
