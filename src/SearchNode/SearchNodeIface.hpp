@@ -19,6 +19,7 @@ purpose:  a dots and boxes search node
 *******************************************************************************/
 
 class Board;
+enum class Player;
 
 /*******************************************************************************
 * INTERFACE
@@ -40,6 +41,7 @@ public:
   // base / derived methods
   virtual bool is_terminal () const = 0;
   virtual int64_t calc_score () const = 0;
+  virtual int64_t calc_player_score (Player player) const = 0;
 
 protected:
 

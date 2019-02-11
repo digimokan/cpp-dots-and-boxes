@@ -96,3 +96,25 @@ TEST_CASE("calc_score()") {
 
 }
 
+TEST_CASE("calc_player_score(player)") {
+
+  constexpr std::size_t dimensions{ 3 };
+  auto scorer{ std::make_shared<ConstScore>() };
+  Board board{ dimensions };
+
+  SUBCASE("empty board") {
+    SNBMock node{ board, scorer };
+    CHECK_EQ(node.calc_player_score(Player::ONE), 0);
+    CHECK_EQ(node.calc_player_score(Player::COMPUTER), 0);
+  }
+
+  SUBCASE("all lines marked by one player") {
+    for (std::size_t i{0}; i < board.get_max_lines(); ++i)
+      board.mark_line(Player::ONE, i);
+    SNBMock node{ board, scorer };
+    CHECK_EQ(node.calc_player_score(Player::ONE), 9);
+    CHECK_EQ(node.calc_player_score(Player::COMPUTER), 0);
+  }
+
+}
+

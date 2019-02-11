@@ -17,6 +17,7 @@ purpose:  a base class impl of SearchNode
 *******************************************************************************/
 
 #include "Board.hpp"
+#include "Player.hpp"
 #include "ScoreIface.hpp"
 #include "SearchNodeBase.hpp"
 
@@ -39,5 +40,9 @@ bool SearchNodeBase::is_terminal () const {
 
 int64_t SearchNodeBase::calc_score () const {
   return this->scorer->calc_score(this->board);
+}
+
+int64_t SearchNodeBase::calc_player_score (Player player) const {
+  return this->scorer->calc_player_score(player, this->board);
 }
 

@@ -27,6 +27,7 @@ purpose:  a base class impl of SearchNode
 *******************************************************************************/
 
 class ScoreIface;
+enum class Player;
 
 /*******************************************************************************
 * INTERFACE
@@ -51,6 +52,7 @@ public:
   // base / derived methods
   bool is_terminal () const final;
   int64_t calc_score () const final;
+  int64_t calc_player_score (Player player) const final;
 
 protected:
 
