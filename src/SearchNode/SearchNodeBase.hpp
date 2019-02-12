@@ -65,7 +65,7 @@ public:
   void gen_children (std::function<void(std::shared_ptr<SearchNodeIface>)> act_on_child) final;
 
   // specialized methods
-  std::optional<std::shared_ptr<SearchNodeBase>> get_parent () const;
+  std::shared_ptr<SearchNodeBase> get_parent () const;
 
 protected:
 

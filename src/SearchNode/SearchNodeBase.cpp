@@ -98,7 +98,7 @@ void SearchNodeBase::gen_children (std::function<void(std::shared_ptr<SearchNode
 * SPECIALIZED METHODS
 *******************************************************************************/
 
-std::optional<std::shared_ptr<SearchNodeBase>> SearchNodeBase::get_parent () const {
+std::shared_ptr<SearchNodeBase> SearchNodeBase::get_parent () const {
   assert(! this->parent.expired());
   return this->parent.lock();
 }
