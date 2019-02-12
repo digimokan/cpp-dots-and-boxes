@@ -413,13 +413,55 @@ TEST_CASE("get_player_to_act()") {
 
   SUBCASE("parent with child, grandchild, great-grandchild") {
     auto parent{ std::make_shared<SNBMock>(board, Player::COMPUTER, scorer) };
-    auto child_a{ std::make_shared<SNBMock>(parent) };
-    auto child_b{ std::make_shared<SNBMock>(child_a) };
-    auto child_c{ std::make_shared<SNBMock>(child_b) };
+    auto child_a{ std::dynamic_pointer_cast<SNBMock>(parent->create_detached_child()) };
+    auto child_b{ std::dynamic_pointer_cast<SNBMock>(child_a->create_detached_child()) };
+    auto child_c{ std::dynamic_pointer_cast<SNBMock>(child_b->create_detached_child()) };
     CHECK_EQ(parent->get_player_to_act(), Player::COMPUTER);
     CHECK_EQ(child_a->get_player_to_act(), Player::ONE);
     CHECK_EQ(child_b->get_player_to_act(), Player::COMPUTER);
     CHECK_EQ(child_c->get_player_to_act(), Player::ONE);
+  }
+
+}
+
+TEST_CASE("gen_children(act_on_child)") {
+
+  constexpr std::size_t dimensions{ 3 };
+  auto scorer{ std::make_shared<ConstScore>() };
+  Board board{ dimensions };
+  std::list<std::shared_ptr<SearchNodeIface>> cgenerated{};
+  std::size_t sum{ 0 };
+
+  SUBCASE("gen depth 1 children") {
+    auto parent{ std::make_shared<SNBMock>(board, Player::ONE, scorer) };
+    auto collect_child = [&cgenerated, &sum] (auto child) {
+      cgenerated.push_back(child);
+      sum += std::dynamic_pointer_cast<SNBMock>(child)->get_marked_line_mock().value();
+    };
+    parent->gen_children(collect_child);
+    CHECK_EQ(cgenerated.size(), 24);
+    CHECK_EQ(sum, 276);
+    for (const auto& child : cgenerated) {
+      CHECK_UNARY(child->has_parent());
+      CHECK_EQ(child->get_depth(), 1);
+      CHECK_EQ(child->get_player_to_act(), Player::COMPUTER);
+    }
+  }
+
+  SUBCASE("gen depth 1, 2, and 3 children") {
+    auto parent{ std::make_shared<SNBMock>(board, Player::ONE, scorer) };
+    std::list<std::shared_ptr<SearchNodeIface>> depth_1_children{};
+    std::list<std::shared_ptr<SearchNodeIface>> depth_2_children{};
+    std::list<std::shared_ptr<SearchNodeIface>> depth_3_children{};
+    auto collect_depth_1_child = [&depth_1_children] (auto child) { depth_1_children.push_back(child); };
+    auto collect_depth_2_child = [&depth_2_children] (auto child) { depth_2_children.push_back(child); };
+    auto collect_depth_3_child = [&depth_3_children] (auto child) { depth_3_children.push_back(child); };
+    parent->gen_children(collect_depth_1_child);
+    depth_1_children.front()->gen_children(collect_depth_2_child);
+    depth_2_children.front()->gen_children(collect_depth_3_child);
+    CHECK_EQ(depth_3_children.size(), 22);
+    CHECK_EQ(depth_3_children.front()->get_depth(), 3);
+    CHECK_EQ(depth_3_children.front()->get_player_to_act(), Player::COMPUTER);
   }
 
 }

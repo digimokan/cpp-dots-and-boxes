@@ -62,6 +62,7 @@ public:
   bool not_has_children () const final;
   std::size_t get_depth () const final;
   Player get_player_to_act () const final;
+  void gen_children (std::function<void(std::shared_ptr<SearchNodeIface>)> act_on_child) final;
 
   // specialized methods
   std::optional<std::shared_ptr<SearchNodeBase>> get_parent () const;

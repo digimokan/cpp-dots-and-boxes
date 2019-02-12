@@ -86,6 +86,15 @@ Player SearchNodeBase::get_player_to_act () const {
   return this->player_to_act;
 }
 
+void SearchNodeBase::gen_children (std::function<void(std::shared_ptr<SearchNodeIface>)> act_on_child) {
+  for (const auto line_num : this->board.get_unmarked_lines()) {
+    auto child{ this->create_detached_child() };
+    child->mark_line(this->get_player_to_act(), line_num);
+    this->add_child(child);
+    act_on_child(child);
+  }
+}
+
 /*******************************************************************************
 * SPECIALIZED METHODS
 *******************************************************************************/
