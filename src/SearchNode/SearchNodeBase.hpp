@@ -71,7 +71,7 @@ protected:
 
   // constructors
   SearchNodeBase (Board board, Player player_to_act, std::shared_ptr<ScoreIface> score_iface);
-  explicit SearchNodeBase (std::shared_ptr<SearchNodeBase> parent);
+  explicit SearchNodeBase (const std::shared_ptr<SearchNodeBase>& parent);
 
   // base / derived methods
   virtual std::shared_ptr<SearchNodeBase> create_detached_child () = 0;
@@ -85,8 +85,8 @@ protected:
   Board board;
   Player player_to_act;
   std::shared_ptr<ScoreIface> scorer;
-  std::optional<std::shared_ptr<SearchNodeBase>> parent;
-  std::list<std::weak_ptr<SearchNodeBase>> children;
+  std::weak_ptr<SearchNodeBase> parent;
+  std::list<std::shared_ptr<SearchNodeBase>> children;
 
 private:
 

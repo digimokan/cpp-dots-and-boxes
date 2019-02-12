@@ -32,12 +32,11 @@ SearchNodeBase::SearchNodeBase (Board board, Player player_to_act, std::shared_p
   : board{std::move(board)},
     player_to_act{player_to_act},
     scorer{std::move(score_iface)},
-    parent{std::nullopt},
     marked_line{std::nullopt},
     depth{0}
 { }
 
-SearchNodeBase::SearchNodeBase (std::shared_ptr<SearchNodeBase> parent)
+SearchNodeBase::SearchNodeBase (const std::shared_ptr<SearchNodeBase>& parent)
   : board{parent->board},
     player_to_act{Get_opposite_player(parent->get_player_to_act())},
     scorer{parent->scorer},
@@ -63,7 +62,7 @@ int64_t SearchNodeBase::calc_player_score (Player player) const {
 }
 
 bool SearchNodeBase::has_parent () const {
-  return this->parent.has_value();
+  return (this->depth > 0);
 }
 
 bool SearchNodeBase::not_has_parent () const {
@@ -100,7 +99,8 @@ void SearchNodeBase::gen_children (std::function<void(std::shared_ptr<SearchNode
 *******************************************************************************/
 
 std::optional<std::shared_ptr<SearchNodeBase>> SearchNodeBase::get_parent () const {
-  return this->parent;
+  assert(! this->parent.expired());
+  return this->parent.lock();
 }
 
 void SearchNodeBase::mark_line (Player player, std::size_t line_num) {

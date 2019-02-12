@@ -248,24 +248,13 @@ TEST_CASE("get_parent()") {
   auto scorer{ std::make_shared<ConstScore>() };
   Board board{ dimensions };
 
-  SUBCASE("single node") {
-    auto node{ std::make_shared<SNBMock>(board, Player::ONE, scorer) };
-    CHECK_FALSE(node->get_parent().has_value());
-    CHECK_EQ(node->get_parent(), std::nullopt);
-  }
-
   SUBCASE("create 3 detached children") {
     auto parent{ std::make_shared<SNBMock>(board, Player::ONE, scorer) };
     auto child_a{ std::make_shared<SNBMock>(parent) };
     auto child_b{ std::make_shared<SNBMock>(parent) };
     auto child_c{ std::make_shared<SNBMock>(parent) };
-    CHECK_FALSE(parent->get_parent().has_value());
-    CHECK_EQ(parent->get_parent(), std::nullopt);
-    CHECK_UNARY(child_a->get_parent().has_value());
     CHECK_EQ(child_a->get_parent(), parent);
-    CHECK_UNARY(child_b->get_parent().has_value());
     CHECK_EQ(child_b->get_parent(), parent);
-    CHECK_UNARY(child_c->get_parent().has_value());
     CHECK_EQ(child_c->get_parent(), parent);
   }
 
@@ -277,13 +266,8 @@ TEST_CASE("get_parent()") {
     parent->add_child_mock(child_b);
     auto child_c{ std::make_shared<SNBMock>(parent) };
     parent->add_child_mock(child_c);
-    CHECK_FALSE(parent->get_parent().has_value());
-    CHECK_EQ(parent->get_parent(), std::nullopt);
-    CHECK_UNARY(child_a->get_parent().has_value());
     CHECK_EQ(child_a->get_parent(), parent);
-    CHECK_UNARY(child_b->get_parent().has_value());
     CHECK_EQ(child_b->get_parent(), parent);
-    CHECK_UNARY(child_c->get_parent().has_value());
     CHECK_EQ(child_c->get_parent(), parent);
   }
 
@@ -311,22 +295,17 @@ TEST_CASE("create_detached_child(child)") {
     child_b->mark_line_mock(Player::ONE, 4);
     auto child_c{ std::dynamic_pointer_cast<SNBMock>(parent->create_detached_child()) };
     child_c->mark_line_mock(Player::ONE, 10);
-    CHECK_FALSE(parent->get_parent().has_value());
-    CHECK_EQ(parent->get_parent(), std::nullopt);
     CHECK_FALSE(parent->has_parent());
     CHECK_FALSE(parent->has_children());
     CHECK_EQ(parent->calc_score(), 0);
-    CHECK_UNARY(child_a->get_parent().has_value());
     CHECK_EQ(child_a->get_parent(), parent);
     CHECK_UNARY(child_a->has_parent());
     CHECK_FALSE(child_a->has_children());
     CHECK_EQ(child_a->calc_score(), 1);
-    CHECK_UNARY(child_b->get_parent().has_value());
     CHECK_EQ(child_b->get_parent(), parent);
     CHECK_UNARY(child_b->has_parent());
     CHECK_FALSE(child_b->has_children());
     CHECK_EQ(child_b->calc_score(), 2);
-    CHECK_UNARY(child_c->get_parent().has_value());
     CHECK_EQ(child_c->get_parent(), parent);
     CHECK_UNARY(child_c->has_parent());
     CHECK_FALSE(child_c->has_children());
@@ -352,22 +331,17 @@ TEST_CASE("create_detached_child(child)") {
     auto child_c{ std::dynamic_pointer_cast<SNBMock>(parent->create_detached_child()) };
     child_c->mark_line_mock(Player::ONE, 10);
     parent->add_child_mock(child_c);
-    CHECK_FALSE(parent->get_parent().has_value());
-    CHECK_EQ(parent->get_parent(), std::nullopt);
     CHECK_FALSE(parent->has_parent());
     CHECK_UNARY(parent->has_children());
     CHECK_EQ(parent->calc_score(), 0);
-    CHECK_UNARY(child_a->get_parent().has_value());
     CHECK_EQ(child_a->get_parent(), parent);
     CHECK_UNARY(child_a->has_parent());
     CHECK_FALSE(child_a->has_children());
     CHECK_EQ(child_a->calc_score(), 1);
-    CHECK_UNARY(child_b->get_parent().has_value());
     CHECK_EQ(child_b->get_parent(), parent);
     CHECK_UNARY(child_b->has_parent());
     CHECK_FALSE(child_b->has_children());
     CHECK_EQ(child_b->calc_score(), 2);
-    CHECK_UNARY(child_c->get_parent().has_value());
     CHECK_EQ(child_c->get_parent(), parent);
     CHECK_UNARY(child_c->has_parent());
     CHECK_FALSE(child_c->has_children());
