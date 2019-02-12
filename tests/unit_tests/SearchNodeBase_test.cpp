@@ -261,3 +261,27 @@ TEST_CASE("add_child(child), get_parent()") {
 
 }
 
+TEST_CASE("get_depth()") {
+
+  constexpr std::size_t dimensions{ 3 };
+  auto scorer{ std::make_shared<ConstScore>() };
+  Board board{ dimensions };
+
+  SUBCASE("single node") {
+    auto node{ std::make_shared<SNBMock>(board, scorer) };
+    CHECK_EQ(node->get_depth(), 0);
+  }
+
+  SUBCASE("parent with child, grandchild, great-grandchild") {
+    auto parent{ std::make_shared<SNBMock>(board, scorer) };
+    auto child_a{ std::make_shared<SNBMock>(parent) };
+    auto child_b{ std::make_shared<SNBMock>(child_a) };
+    auto child_c{ std::make_shared<SNBMock>(child_b) };
+    CHECK_EQ(parent->get_depth(), 0);
+    CHECK_EQ(child_a->get_depth(), 1);
+    CHECK_EQ(child_b->get_depth(), 2);
+    CHECK_EQ(child_c->get_depth(), 3);
+  }
+
+}
+

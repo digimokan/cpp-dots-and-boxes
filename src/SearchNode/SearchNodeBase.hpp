@@ -60,6 +60,7 @@ public:
   bool not_has_parent () const final;
   bool has_children () const final;
   bool not_has_children () const final;
+  std::size_t get_depth () const final;
   std::optional<std::shared_ptr<SearchNodeBase>> get_parent () const;
 
 protected:
@@ -82,6 +83,7 @@ protected:
 private:
 
   std::optional<std::size_t> marked_line;
+  std::size_t depth;
 
 };
 

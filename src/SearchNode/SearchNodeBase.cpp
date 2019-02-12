@@ -32,14 +32,16 @@ SearchNodeBase::SearchNodeBase (Board board, std::shared_ptr<ScoreIface> score_i
   : board{std::move(board)},
     scorer{std::move(score_iface)},
     parent{std::nullopt},
-    marked_line{std::nullopt}
+    marked_line{std::nullopt},
+    depth{0}
 { }
 
 SearchNodeBase::SearchNodeBase (std::shared_ptr<SearchNodeBase> parent)
   : board{parent->board},
     scorer{parent->scorer},
     parent{parent},
-    marked_line{std::nullopt}
+    marked_line{std::nullopt},
+    depth{parent->get_depth() + 1}
 { }
 
 /*******************************************************************************
@@ -72,6 +74,10 @@ bool SearchNodeBase::has_children () const {
 
 bool SearchNodeBase::not_has_children () const {
   return (! this->has_children());
+}
+
+std::size_t SearchNodeBase::get_depth () const {
+  return this->depth;
 }
 
 std::optional<std::shared_ptr<SearchNodeBase>> SearchNodeBase::get_parent () const {
