@@ -8,6 +8,7 @@
 * USER INCLUDES
 *******************************************************************************/
 
+#include "CompilerUtils.hpp"
 #include "Lines.hpp"
 
 /*******************************************************************************
@@ -38,6 +39,7 @@ TEST_CASE("calculates number of board lines correctly") {
 
   SUBCASE("copied dimensions of 4") {
     Lines lines_to_copy{4};
+    MARK_AS_USED(lines_to_copy);
     Lines lines{ lines_to_copy };
     CHECK_EQ(lines.get_max_lines(), 40);
   }
@@ -174,6 +176,32 @@ TEST_CASE("copied lines, some lines marked") {
     auto add_to_sum = [&sum] (std::size_t line_num) { sum += line_num; };
     lines.for_each_unmarked_line_num(add_to_sum);
     CHECK_EQ(sum, expected_sum);
+  }
+
+}
+
+TEST_CASE("get_unmarked_lines()") {
+
+  Lines lines{2};
+
+  SUBCASE("no lines marked") {
+    const std::set<std::size_t>& ul{ lines.get_unmarked_lines() };
+    CHECK_EQ(ul.size(), 12);
+  }
+
+  SUBCASE("all lines marked") {
+    for (std::size_t i = 0; i < lines.get_max_lines(); ++i)
+      lines.mark(i);
+    const std::set<std::size_t>& ul{ lines.get_unmarked_lines() };
+    CHECK_UNARY(ul.empty());
+  }
+
+  SUBCASE("all but one line marked") {
+    for (std::size_t i = 0; i < lines.get_max_lines() - 1; ++i)
+      lines.mark(i);
+    const std::set<std::size_t>& ul{ lines.get_unmarked_lines() };
+    CHECK_EQ(ul.size(), 1);
+    CHECK_EQ(ul.count(lines.get_max_lines() - 1 ), 1);
   }
 
 }

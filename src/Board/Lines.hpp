@@ -45,6 +45,7 @@ public:
   bool all_marked () const;
   std::size_t get_max_lines () const;
   void for_each_unmarked_line_num (const std::function<void(std::size_t line_num)>& act_on_line_num) const;
+  const std::set<std::size_t>& get_unmarked_lines () const;
 
 private:
 

@@ -61,6 +61,10 @@ void Lines::for_each_unmarked_line_num (const std::function<void(std::size_t lin
     act_on_line_num(line_num);
 }
 
+const std::set<std::size_t>& Lines::get_unmarked_lines () const {
+  return this->unmarked_lines;
+}
+
 /*******************************************************************************
 * HELPER METHODS
 *******************************************************************************/
