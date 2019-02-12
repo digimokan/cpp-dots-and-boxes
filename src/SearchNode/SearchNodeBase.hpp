@@ -61,6 +61,8 @@ public:
   bool has_children () const final;
   bool not_has_children () const final;
   std::size_t get_depth () const final;
+
+  // specialized methods
   std::optional<std::shared_ptr<SearchNodeBase>> get_parent () const;
 
 protected:

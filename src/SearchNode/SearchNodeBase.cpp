@@ -80,13 +80,13 @@ std::size_t SearchNodeBase::get_depth () const {
   return this->depth;
 }
 
-std::optional<std::shared_ptr<SearchNodeBase>> SearchNodeBase::get_parent () const {
-  return this->parent;
-}
-
 /*******************************************************************************
 * SPECIALIZED METHODS
 *******************************************************************************/
+
+std::optional<std::shared_ptr<SearchNodeBase>> SearchNodeBase::get_parent () const {
+  return this->parent;
+}
 
 void SearchNodeBase::mark_line (Player player, std::size_t line_num) {
   assert(! this->marked_line.has_value());
