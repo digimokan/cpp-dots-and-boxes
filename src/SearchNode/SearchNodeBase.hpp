@@ -71,6 +71,9 @@ protected:
   SearchNodeBase (Board board, std::shared_ptr<ScoreIface> score_iface);
   explicit SearchNodeBase (std::shared_ptr<SearchNodeBase> parent);
 
+  // base / derived methods
+  virtual std::shared_ptr<SearchNodeBase> create_detached_child () = 0;
+
   // specialized methods
   void mark_line (Player player, std::size_t line_num);
   std::optional<std::size_t> get_marked_line () const;
