@@ -9,6 +9,7 @@ purpose:  a player ("player one" or "computer") in a dots and boxes game
 * SYSTEM INCLUDES
 *******************************************************************************/
 
+#include <cassert>
 #include <iostream>
 
 /*******************************************************************************
@@ -34,5 +35,21 @@ std::ostream& operator<< (std::ostream& os, const Player& player) {
       break;
   }
   return os;
+}
+
+Player Get_opposite_player (Player player) {
+  Player opposite;
+  switch (player) {
+    case Player::ONE:
+      opposite = Player::COMPUTER;
+      break;
+    case Player::COMPUTER:
+      opposite = Player::ONE;
+      break;
+    default:
+      assert(false);
+      break;
+  }
+  return opposite;
 }
 

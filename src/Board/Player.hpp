@@ -32,6 +32,7 @@ const Player PlayerVals[] = {
 
 // specialized methods
 std::ostream& operator<< (std::ostream& os, const Player& player);
+Player Get_opposite_player (Player player);
 
 /*******************************************************************************
 * END
