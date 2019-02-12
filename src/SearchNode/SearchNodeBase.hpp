@@ -56,6 +56,7 @@ public:
   bool is_terminal () const final;
   int64_t calc_score () const final;
   int64_t calc_player_score (Player player) const final;
+  void set_minimax_score () final;
   bool has_parent () const final;
   bool not_has_parent () const final;
   bool has_children () const final;
@@ -92,6 +93,7 @@ private:
 
   std::optional<std::size_t> marked_line;
   std::size_t depth;
+  std::optional<int64_t> minimax_score;
 
 };
 

@@ -33,7 +33,8 @@ SearchNodeBase::SearchNodeBase (Board board, Player player_to_act, std::shared_p
     player_to_act{player_to_act},
     scorer{std::move(score_iface)},
     marked_line{std::nullopt},
-    depth{0}
+    depth{0},
+    minimax_score{std::nullopt}
 { }
 
 SearchNodeBase::SearchNodeBase (const std::shared_ptr<SearchNodeBase>& parent)
@@ -42,7 +43,8 @@ SearchNodeBase::SearchNodeBase (const std::shared_ptr<SearchNodeBase>& parent)
     scorer{parent->scorer},
     parent{parent},
     marked_line{std::nullopt},
-    depth{parent->get_depth() + 1}
+    depth{parent->get_depth() + 1},
+    minimax_score{std::nullopt}
 { }
 
 /*******************************************************************************
@@ -59,6 +61,10 @@ int64_t SearchNodeBase::calc_score () const {
 
 int64_t SearchNodeBase::calc_player_score (Player player) const {
   return this->scorer->calc_player_score(player, this->board);
+}
+
+void SearchNodeBase::set_minimax_score () {
+  this->minimax_score = this->calc_score();
 }
 
 bool SearchNodeBase::has_parent () const {

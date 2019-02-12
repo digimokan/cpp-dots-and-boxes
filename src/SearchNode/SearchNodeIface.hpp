@@ -44,6 +44,7 @@ public:
   virtual bool is_terminal () const = 0;
   virtual int64_t calc_score () const = 0;
   virtual int64_t calc_player_score (Player player) const = 0;
+  virtual void set_minimax_score () = 0;
   virtual bool has_parent () const = 0;
   virtual bool not_has_parent () const = 0;
   virtual bool has_children () const = 0;
