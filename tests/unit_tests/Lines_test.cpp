@@ -201,7 +201,7 @@ TEST_CASE("get_unmarked_lines()") {
       lines.mark(i);
     const std::set<std::size_t>& ul{ lines.get_unmarked_lines() };
     CHECK_EQ(ul.size(), 1);
-    CHECK_EQ(ul.count(lines.get_max_lines() - 1 ), 1);
+    CHECK_EQ(ul.count(lines.get_max_lines() - 1), 1);
   }
 
 }

@@ -273,6 +273,13 @@ TEST_CASE("six boxes marked by two players, with extra lines") {
     CHECK_EQ(sum, expected_sum);
   }
 
+  SUBCASE("get_unmarked_lines()") {
+    const std::set<std::size_t>& ul{ board.get_unmarked_lines() };
+    CHECK_EQ(ul.size(), 2);
+    CHECK_EQ(ul.count(10), 1);
+    CHECK_EQ(ul.count(12), 1);
+  }
+
   SUBCASE("is_box_marked()") {
     for (std::size_t i{0}; i < 3; ++i)
       CHECK_UNARY(board.is_box_marked(i));

@@ -61,6 +61,10 @@ void Board::for_each_unmarked_line_num (const std::function<void(std::size_t lin
   this->lines.for_each_unmarked_line_num(act_on_line_num);
 }
 
+const std::set<std::size_t>& Board::get_unmarked_lines () const {
+  return this->lines.get_unmarked_lines();
+}
+
 bool Board::is_box_marked (std::size_t box_num) const {
   return this->box_marks.is_marked(box_num);
 }
