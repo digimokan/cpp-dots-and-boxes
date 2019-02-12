@@ -9,6 +9,7 @@ purpose:  a base class impl of SearchNode
 * SYSTEM INCLUDES
 *******************************************************************************/
 
+#include <algorithm>
 #include <cassert>
 #include <cstddef>
 #include <cstdint>
@@ -67,6 +68,11 @@ void SearchNodeBase::set_minimax_score () {
   this->minimax_score = this->calc_score();
 }
 
+int64_t SearchNodeBase::get_minimax_score () {
+  assert(this->minimax_score.has_value());
+  return this->minimax_score.value();
+}
+
 bool SearchNodeBase::has_parent () const {
   return (this->depth > 0);
 }
@@ -121,5 +127,27 @@ std::optional<std::size_t> SearchNodeBase::get_marked_line () const {
 
 void SearchNodeBase::add_child (const std::shared_ptr<SearchNodeBase>& child) {
   this->children.push_back(child);
+}
+
+std::shared_ptr<SearchNodeBase> SearchNodeBase::get_max_child () const {
+  auto comp = [] (const auto& left, const auto& right) {
+    int64_t left_score{ left->get_minimax_score() };
+    int64_t right_score{ right->get_minimax_score() };
+    return (left_score < right_score);
+  };
+  auto it{ std::max_element(this->children.cbegin(), this->children.cend(), comp) };
+  assert(it != this->children.cend());
+  return *it;
+}
+
+std::shared_ptr<SearchNodeBase> SearchNodeBase::get_min_child () const {
+  auto comp = [] (const auto& left, const auto& right) {
+    int64_t left_score{ left->get_minimax_score() };
+    int64_t right_score{ right->get_minimax_score() };
+    return (left_score < right_score);
+  };
+  auto it{ std::min_element(this->children.cbegin(), this->children.cend(), comp) };
+  assert(it != this->children.cend());
+  return *it;
 }
 

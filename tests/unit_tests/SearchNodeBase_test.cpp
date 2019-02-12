@@ -24,6 +24,8 @@ public:
   void mark_line_mock (Player player, std::size_t line_num) { this->mark_line(player, line_num); }
   std::optional<std::size_t> get_marked_line_mock () const { return this->get_marked_line(); }
   void add_child_mock (const std::shared_ptr<SearchNodeBase>& child) { this->add_child(child); }
+  std::shared_ptr<SearchNodeBase> get_max_child_mock () const { return this->get_max_child(); }
+  std::shared_ptr<SearchNodeBase> get_min_child_mock () const { return this->get_min_child(); }
 // should be **protected**:
   std::shared_ptr<SearchNodeBase> create_detached_child () override { return std::make_shared<SNBMock>(this->shared_from_this()); }
 };
@@ -346,6 +348,59 @@ TEST_CASE("create_detached_child(child)") {
     CHECK_UNARY(child_c->has_parent());
     CHECK_FALSE(child_c->has_children());
     CHECK_EQ(child_c->calc_score(), 0);
+  }
+
+}
+
+TEST_CASE("get_max_child(), get_min_child()") {
+
+  constexpr std::size_t dimensions{ 3 };
+  auto scorer{ std::make_shared<ConstScore>() };
+  Board board{ dimensions };
+  auto parent{ std::make_shared<SNBMock>(board, Player::ONE, scorer) };
+  Board board_a{ dimensions };
+  board_a.mark_line(Player::ONE, 0);
+  board_a.mark_line(Player::ONE, 2);
+  board_a.mark_line(Player::ONE, 3);
+  auto child_a{ std::make_shared<SNBMock>(board_a, Player::ONE, scorer) };
+  child_a->set_minimax_score();
+  Board board_b{ dimensions };
+  board_b.mark_line(Player::ONE, 0);
+  board_b.mark_line(Player::ONE, 1);
+  board_b.mark_line(Player::ONE, 2);
+  board_b.mark_line(Player::ONE, 3);
+  board_b.mark_line(Player::ONE, 4);
+  board_b.mark_line(Player::ONE, 5);
+  board_b.mark_line(Player::ONE, 6);
+  board_b.mark_line(Player::ONE, 7);
+  board_b.mark_line(Player::ONE, 8);
+  board_b.mark_line(Player::ONE, 9);
+  board_b.mark_line(Player::ONE, 10);
+  board_b.mark_line(Player::ONE, 11);
+  auto child_b{ std::make_shared<SNBMock>(board_b, Player::ONE, scorer) };
+  child_b->set_minimax_score();
+  Board board_c{ dimensions };
+  board_c.mark_line(Player::ONE, 5);
+  board_c.mark_line(Player::ONE, 6);
+  board_c.mark_line(Player::ONE, 7);
+  board_c.mark_line(Player::ONE, 8);
+  board_c.mark_line(Player::ONE, 9);
+  board_c.mark_line(Player::ONE, 10);
+  board_c.mark_line(Player::ONE, 11);
+  auto child_c{ std::make_shared<SNBMock>(board_c, Player::ONE, scorer) };
+  child_c->set_minimax_score();
+  parent->add_child_mock(child_a);
+  parent->add_child_mock(child_b);
+  parent->add_child_mock(child_c);
+
+  SUBCASE("max of three children") {
+    auto max_child{ parent->get_max_child_mock() };
+    CHECK_EQ(max_child, child_b);
+  }
+
+  SUBCASE("min of three children") {
+    auto min_child{ parent->get_min_child_mock() };
+    CHECK_EQ(min_child, child_a);
   }
 
 }

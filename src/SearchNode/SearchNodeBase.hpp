@@ -57,6 +57,7 @@ public:
   int64_t calc_score () const final;
   int64_t calc_player_score (Player player) const final;
   void set_minimax_score () final;
+  int64_t get_minimax_score () final;
   bool has_parent () const final;
   bool not_has_parent () const final;
   bool has_children () const final;
@@ -81,6 +82,8 @@ protected:
   void mark_line (Player player, std::size_t line_num);
   std::optional<std::size_t> get_marked_line () const;
   void add_child (const std::shared_ptr<SearchNodeBase>& child);
+  std::shared_ptr<SearchNodeBase> get_max_child () const;
+  std::shared_ptr<SearchNodeBase> get_min_child () const;
 
   // fields
   Board board;
