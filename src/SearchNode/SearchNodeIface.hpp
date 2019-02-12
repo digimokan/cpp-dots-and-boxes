@@ -46,6 +46,8 @@ public:
   virtual int64_t calc_player_score (Player player) const = 0;
   virtual void set_minimax_score () = 0;
   virtual int64_t get_minimax_score () = 0;
+  virtual void set_minimax_score_from_children () = 0;
+  virtual std::shared_ptr<SearchNodeIface> get_minimax_child () = 0;
   virtual bool has_parent () const = 0;
   virtual bool not_has_parent () const = 0;
   virtual bool has_children () const = 0;

@@ -65,6 +65,8 @@ public:
   std::size_t get_depth () const final;
   Player get_player_to_act () const final;
   void gen_children (std::function<void(std::shared_ptr<SearchNodeIface>)> act_on_child) final;
+  void set_minimax_score_from_children () final;
+  std::shared_ptr<SearchNodeIface> get_minimax_child () override = 0;
 
   // specialized methods
   std::shared_ptr<SearchNodeBase> get_parent () const;

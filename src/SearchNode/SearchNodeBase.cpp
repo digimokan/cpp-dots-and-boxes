@@ -106,6 +106,11 @@ void SearchNodeBase::gen_children (std::function<void(std::shared_ptr<SearchNode
   }
 }
 
+void SearchNodeBase::set_minimax_score_from_children () {
+  assert(this->has_children());
+  this->minimax_score = this->get_minimax_child()->get_minimax_score();
+}
+
 /*******************************************************************************
 * SPECIALIZED METHODS
 *******************************************************************************/
