@@ -23,6 +23,7 @@ purpose:  a base class impl of SearchNode
 *******************************************************************************/
 
 #include "Board.hpp"
+#include "Player.hpp"
 #include "SearchNodeIface.hpp"
 
 /*******************************************************************************
@@ -30,7 +31,6 @@ purpose:  a base class impl of SearchNode
 *******************************************************************************/
 
 class ScoreIface;
-enum class Player;
 
 /*******************************************************************************
 * INTERFACE
@@ -61,6 +61,7 @@ public:
   bool has_children () const final;
   bool not_has_children () const final;
   std::size_t get_depth () const final;
+  Player get_player_to_act () const final;
 
   // specialized methods
   std::optional<std::shared_ptr<SearchNodeBase>> get_parent () const;
@@ -68,7 +69,7 @@ public:
 protected:
 
   // constructors
-  SearchNodeBase (Board board, std::shared_ptr<ScoreIface> score_iface);
+  SearchNodeBase (Board board, Player player_to_act, std::shared_ptr<ScoreIface> score_iface);
   explicit SearchNodeBase (std::shared_ptr<SearchNodeBase> parent);
 
   // base / derived methods
@@ -81,6 +82,7 @@ protected:
 
   // fields
   Board board;
+  Player player_to_act;
   std::shared_ptr<ScoreIface> scorer;
   std::optional<std::shared_ptr<SearchNodeBase>> parent;
   std::list<std::weak_ptr<SearchNodeBase>> children;

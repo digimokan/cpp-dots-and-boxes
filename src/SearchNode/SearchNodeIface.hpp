@@ -47,6 +47,7 @@ public:
   virtual bool has_children () const = 0;
   virtual bool not_has_children () const = 0;
   virtual std::size_t get_depth () const = 0;
+  virtual Player get_player_to_act () const = 0;
 
 protected:
 

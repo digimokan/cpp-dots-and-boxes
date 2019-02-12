@@ -28,8 +28,9 @@ purpose:  a base class impl of SearchNode
 * CONSTRUCTORS
 *******************************************************************************/
 
-SearchNodeBase::SearchNodeBase (Board board, std::shared_ptr<ScoreIface> score_iface)
+SearchNodeBase::SearchNodeBase (Board board, Player player_to_act, std::shared_ptr<ScoreIface> score_iface)
   : board{std::move(board)},
+    player_to_act{player_to_act},
     scorer{std::move(score_iface)},
     parent{std::nullopt},
     marked_line{std::nullopt},
@@ -38,6 +39,7 @@ SearchNodeBase::SearchNodeBase (Board board, std::shared_ptr<ScoreIface> score_i
 
 SearchNodeBase::SearchNodeBase (std::shared_ptr<SearchNodeBase> parent)
   : board{parent->board},
+    player_to_act{Get_opposite_player(parent->get_player_to_act())},
     scorer{parent->scorer},
     parent{parent},
     marked_line{std::nullopt},
@@ -78,6 +80,10 @@ bool SearchNodeBase::not_has_children () const {
 
 std::size_t SearchNodeBase::get_depth () const {
   return this->depth;
+}
+
+Player SearchNodeBase::get_player_to_act () const {
+  return this->player_to_act;
 }
 
 /*******************************************************************************
