@@ -59,9 +59,7 @@ public:
   void set_minimax_score () final;
   int64_t get_minimax_score () final;
   bool has_parent () const final;
-  bool not_has_parent () const final;
   bool has_children () const final;
-  bool not_has_children () const final;
   std::size_t get_depth () const final;
   Player get_player_to_act () const final;
   std::optional<std::size_t> get_marked_line () const final;

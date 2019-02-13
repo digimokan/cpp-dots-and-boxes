@@ -49,9 +49,7 @@ public:
   virtual void set_minimax_score_from_children () = 0;
   virtual std::shared_ptr<SearchNodeIface> get_minimax_child () = 0;
   virtual bool has_parent () const = 0;
-  virtual bool not_has_parent () const = 0;
   virtual bool has_children () const = 0;
-  virtual bool not_has_children () const = 0;
   virtual std::size_t get_depth () const = 0;
   virtual Player get_player_to_act () const = 0;
   virtual std::optional<std::size_t> get_marked_line () const = 0;

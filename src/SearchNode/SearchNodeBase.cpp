@@ -77,16 +77,8 @@ bool SearchNodeBase::has_parent () const {
   return (this->depth > 0);
 }
 
-bool SearchNodeBase::not_has_parent () const {
-  return (! this->has_parent());
-}
-
 bool SearchNodeBase::has_children () const {
   return (! this->children.empty());
-}
-
-bool SearchNodeBase::not_has_children () const {
-  return (! this->has_children());
 }
 
 std::size_t SearchNodeBase::get_depth () const {

@@ -175,7 +175,6 @@ TEST_CASE("has_parent()") {
   SUBCASE("single node") {
     auto node{ std::make_shared<SNBMock>(board, Player::ONE, scorer) };
     CHECK_FALSE(node->has_parent());
-    CHECK_UNARY(node->not_has_parent());
   }
 
   SUBCASE("create 3 detached children") {
@@ -213,8 +212,7 @@ TEST_CASE("has_children()") {
 
   SUBCASE("single node") {
     auto node{ std::make_shared<SNBMock>(board, Player::ONE, scorer) };
-    CHECK_FALSE(node->has_parent());
-    CHECK_UNARY(node->not_has_parent());
+    CHECK_FALSE(node->has_children());
   }
 
   SUBCASE("create 3 detached children") {
@@ -222,10 +220,10 @@ TEST_CASE("has_children()") {
     auto child_a{ std::make_shared<SNBMock>(parent) };
     auto child_b{ std::make_shared<SNBMock>(parent) };
     auto child_c{ std::make_shared<SNBMock>(parent) };
-    CHECK_FALSE(parent->has_parent());
-    CHECK_UNARY(child_a->has_parent());
-    CHECK_UNARY(child_b->has_parent());
-    CHECK_UNARY(child_c->has_parent());
+    CHECK_FALSE(parent->has_children());
+    CHECK_FALSE(child_a->has_children());
+    CHECK_FALSE(child_b->has_children());
+    CHECK_FALSE(child_c->has_children());
   }
 
   SUBCASE("create 3 children, add them to parent") {
