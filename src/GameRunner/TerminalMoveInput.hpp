@@ -1,19 +1,24 @@
 /*******************************************************************************
-module:   MoveInputIface
+module:   TerminalMoveInput
 author:   digimokan
-date:     12 FEB 2019
-purpose:  get input for a move (i.e., the line-number) from terminal/file/etc
+date:     13 FEB 2019
+purpose:  for current board, collect move input (line num to mark) from terminal
 *******************************************************************************/
 
-#ifndef MOVE_INPUT_IFACE_HPP
-#define MOVE_INPUT_IFACE_HPP 1
+#ifndef TERMINAL_MOVE_INPUT_HPP
+#define TERMINAL_MOVE_INPUT_HPP 1
 
 /*******************************************************************************
 * SYSTEM INCLUDES
 *******************************************************************************/
 
 #include <cstddef>
-#include <memory>
+
+/*******************************************************************************
+* USER INCLUDES
+*******************************************************************************/
+
+#include "MoveInputIface.hpp"
 
 /*******************************************************************************
 * FORWARD DECLARES
@@ -25,26 +30,24 @@ class SearchNodeIface;
 * INTERFACE
 *******************************************************************************/
 
-class MoveInputIface {
+class TerminalMoveInput : public MoveInputIface {
 
 public:
 
+  // constructors
+  TerminalMoveInput () = default;
+
   // destructor
-  virtual ~MoveInputIface () = default;
+  ~TerminalMoveInput () override = default;
 
   // operators
-  MoveInputIface (const MoveInputIface& in) = default;
-  MoveInputIface& operator= (const MoveInputIface& rh) = default;
-  MoveInputIface (MoveInputIface&& in) = default;
-  MoveInputIface& operator= (MoveInputIface&& rh) = default;
+  TerminalMoveInput (const TerminalMoveInput& in) = default;
+  TerminalMoveInput& operator= (const TerminalMoveInput& rh) = default;
+  TerminalMoveInput (TerminalMoveInput&& in) = default;
+  TerminalMoveInput& operator= (TerminalMoveInput&& rh) = default;
 
   // base / derived methods
-  virtual std::size_t get_line_to_mark (const std::shared_ptr<SearchNodeIface>& node) = 0;
-
-protected:
-
-  // constructors
-  MoveInputIface () = default;
+  std::size_t get_line_to_mark (const std::shared_ptr<SearchNodeIface>& node) final;
 
 };
 
@@ -52,5 +55,5 @@ protected:
 * END
 *******************************************************************************/
 
-#endif // MOVE_INPUT_IFACE_HPP
+#endif // TERMINAL_MOVE_INPUT_HPP
 
