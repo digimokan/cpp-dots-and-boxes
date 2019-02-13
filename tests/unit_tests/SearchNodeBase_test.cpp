@@ -22,7 +22,6 @@ public:
   SNBMock (Board board, Player player_to_act, std::shared_ptr<ScoreIface> score_iface) : SearchNodeBase{std::move(board), player_to_act, std::move(score_iface)} { }
   explicit SNBMock (const std::shared_ptr<SNBMock>& parent) : SearchNodeBase{parent} { }
   void mark_line_mock (Player player, std::size_t line_num) { this->mark_line(player, line_num); }
-  std::optional<std::size_t> get_marked_line_mock () const { return this->get_marked_line(); }
   void add_child_mock (const std::shared_ptr<SearchNodeBase>& child) { this->add_child(child); }
   std::shared_ptr<SearchNodeBase> get_max_child_mock () const { return this->get_max_child(); }
   std::shared_ptr<SearchNodeBase> get_min_child_mock () const { return this->get_min_child(); }
@@ -154,15 +153,15 @@ TEST_CASE("get_marked_line()") {
 
   SUBCASE("no line marked") {
     SNBMock node{ board, Player::ONE, scorer };
-    CHECK_FALSE(node.get_marked_line_mock().has_value());
-    CHECK_EQ(node.get_marked_line_mock(), std::nullopt);
+    CHECK_FALSE(node.get_marked_line().has_value());
+    CHECK_EQ(node.get_marked_line(), std::nullopt);
   }
 
   SUBCASE("a line is marked") {
     SNBMock node{ board, Player::ONE, scorer };
     node.mark_line_mock(Player::ONE, 3);
-    CHECK_UNARY(node.get_marked_line_mock().has_value());
-    CHECK_EQ(node.get_marked_line_mock(), 3);
+    CHECK_UNARY(node.get_marked_line().has_value());
+    CHECK_EQ(node.get_marked_line(), 3);
   }
 
 }
@@ -514,7 +513,7 @@ TEST_CASE("gen_children(act_on_child)") {
     auto parent{ std::make_shared<SNBMock>(board, Player::ONE, scorer) };
     auto collect_child = [&cgenerated, &sum] (auto child) {
       cgenerated.push_back(child);
-      sum += std::dynamic_pointer_cast<SNBMock>(child)->get_marked_line_mock().value();
+      sum += std::dynamic_pointer_cast<SNBMock>(child)->get_marked_line().value();
     };
     parent->gen_children(collect_child);
     CHECK_EQ(cgenerated.size(), 24);

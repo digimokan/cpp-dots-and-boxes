@@ -64,6 +64,7 @@ public:
   bool not_has_children () const final;
   std::size_t get_depth () const final;
   Player get_player_to_act () const final;
+  std::optional<std::size_t> get_marked_line () const final;
   void gen_children (std::function<void(std::shared_ptr<SearchNodeIface>)> act_on_child) final;
   void set_minimax_score_from_children () final;
   std::shared_ptr<SearchNodeIface> get_minimax_child () override = 0;
@@ -82,7 +83,6 @@ protected:
 
   // specialized methods
   void mark_line (Player player, std::size_t line_num);
-  std::optional<std::size_t> get_marked_line () const;
   void add_child (const std::shared_ptr<SearchNodeBase>& child);
   std::shared_ptr<SearchNodeBase> get_max_child () const;
   std::shared_ptr<SearchNodeBase> get_min_child () const;
