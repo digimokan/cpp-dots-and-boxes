@@ -1,34 +1,40 @@
 /*******************************************************************************
-module:   main
+module:   TerminalGameRunner
 author:   digimokan
-date:     02 FEB 2018 (created)
-purpose:  run Dots and Boxes program
+date:     13 FEB 2019
+purpose:  run a dots and boxes game with terminal input/output
 *******************************************************************************/
 
 /*******************************************************************************
 * SYSTEM INCLUDES
 *******************************************************************************/
 
-#include <cstddef>
 #include <memory>
 
 /*******************************************************************************
 * USER INCLUDES
 *******************************************************************************/
 
-#include "ConstScore.hpp"
+#include "GameRunnerBase.hpp"
+#include "MiniMaxMoveFinder.hpp"
+#include "ScoreIface.hpp"
 #include "TerminalGameRunner.hpp"
+#include "TerminalMoveInput.hpp"
+#include "TerminalMoveOutput.hpp"
 
 /*******************************************************************************
-* MAIN
+* CONSTRUCTORS
 *******************************************************************************/
 
-int main (int argc, char* argv[]) {
-  constexpr std::size_t dimensions{ 2 };
-  constexpr std::size_t max_search_depth{ 5 };
-  auto scorer{ std::make_shared<ConstScore>() };
-  TerminalGameRunner game_runner{ dimensions, scorer, max_search_depth };
-  game_runner.run();
-  return (0);
-}
+TerminalGameRunner::TerminalGameRunner (std::size_t board_dimensions,
+        const std::shared_ptr<ScoreIface>& scorer, std::size_t max_search_depth)
+  : GameRunnerBase{
+      board_dimensions,
+      scorer,
+      max_search_depth,
+      std::make_shared<MiniMaxMoveFinder>(),
+      std::make_shared<TerminalMoveInput>(),
+      std::make_shared<TerminalMoveOutput>()
+    }
+{ }
 
