@@ -89,6 +89,10 @@ Player SearchNodeBase::get_player_to_act () const {
   return this->player_to_act;
 }
 
+std::optional<std::size_t> SearchNodeBase::get_marked_line () const {
+  return this->marked_line;
+}
+
 void SearchNodeBase::gen_children (std::function<void(std::shared_ptr<SearchNodeIface>)> act_on_child) {
   for (const auto line_num : this->board.get_unmarked_lines()) {
     auto child{ this->create_detached_child() };
@@ -116,10 +120,6 @@ void SearchNodeBase::mark_line (Player player, std::size_t line_num) {
   assert(! this->marked_line.has_value());
   this->marked_line = line_num;
   this->board.mark_line(player, line_num);
-}
-
-std::optional<std::size_t> SearchNodeBase::get_marked_line () const {
-  return this->marked_line;
 }
 
 void SearchNodeBase::add_child (const std::shared_ptr<SearchNodeBase>& child) {
