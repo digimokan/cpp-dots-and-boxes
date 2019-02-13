@@ -24,7 +24,7 @@ purpose:  run Dots and Boxes program
 *******************************************************************************/
 
 int main (int argc, char* argv[]) {
-  constexpr std::size_t dimensions{ 2 };
+  constexpr std::size_t dimensions{ 3 };
   constexpr std::size_t max_search_depth{ 5 };
   auto scorer{ std::make_shared<ConstScore>() };
   TerminalGameRunner game_runner{ dimensions, scorer, max_search_depth };

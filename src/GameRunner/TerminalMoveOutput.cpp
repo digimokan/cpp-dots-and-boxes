@@ -9,6 +9,7 @@ purpose:  output a SearchNode's current board, scores, etc to the terminal
 * SYSTEM INCLUDES
 *******************************************************************************/
 
+#include <iomanip>
 #include <iostream>
 #include <memory>
 #include <optional>
@@ -28,12 +29,13 @@ purpose:  output a SearchNode's current board, scores, etc to the terminal
 *******************************************************************************/
 
 void TerminalMoveOutput::send (std::shared_ptr<SearchNodeIface> node) {
+  std::cout << '\n';
   std::cout << node->get_board() << '\n';
   std::cout << '\n';
-  std::cout << "Last Line Marked: " << this->last_line_marked(node) << '\n';
-  std::cout << "Player To Act:    " << node->get_player_to_act() << '\n';
-  std::cout << "Player 1 Score:   " << node->calc_player_score(Player::ONE) << '\n';
-  std::cout << "Player C Score:   " << node->calc_player_score(Player::COMPUTER) << '\n';
+  std::cout << "Last Line Marked: " << std::right << std::setw(3) << this->last_line_marked(node) << "     ";
+  std::cout << "Player 1 Score: " << node->calc_player_score(Player::ONE) << '\n';
+  std::cout << "Player To Act:      " << node->get_player_to_act() << "     ";
+  std::cout << "Player C Score: " << node->calc_player_score(Player::COMPUTER) << '\n';
 }
 
 /*******************************************************************************
