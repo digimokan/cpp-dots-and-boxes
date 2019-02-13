@@ -53,5 +53,6 @@ void GameRunnerBase::run () {
     auto next_search_node{ node->gen_new_root(line_num) };
     node = this->move_finder->find_best_move(next_search_node, this->max_search_depth);
   }
+  this->move_output->send(node);
 }
 
