@@ -541,3 +541,22 @@ TEST_CASE("gen_children(act_on_child)") {
 
 }
 
+TEST_CASE("gen_new_root(line_num)") {
+
+  constexpr std::size_t dimensions{ 3 };
+  auto scorer{ std::make_shared<ConstScore>() };
+  Board board{ dimensions };
+
+  SUBCASE("gen valid child") {
+    auto parent{ std::make_shared<SNBMock>(board, Player::ONE, scorer) };
+    auto child{ parent->gen_new_root(4) };
+    CHECK_FALSE(parent->has_children());
+    CHECK_FALSE(child->has_parent());
+    CHECK_EQ(child->get_depth(), 0);
+    CHECK_EQ(child->get_player_to_act(), Player::COMPUTER);
+    CHECK_UNARY(child->get_marked_line().has_value());
+    CHECK_EQ(child->get_marked_line(), 4);
+  }
+
+}
+

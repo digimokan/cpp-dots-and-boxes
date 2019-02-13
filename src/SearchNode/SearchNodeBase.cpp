@@ -85,6 +85,10 @@ std::size_t SearchNodeBase::get_depth () const {
   return this->depth;
 }
 
+void SearchNodeBase::set_depth (std::size_t in_depth) {
+  this->depth = in_depth;
+}
+
 Player SearchNodeBase::get_player_to_act () const {
   return this->player_to_act;
 }
@@ -104,6 +108,13 @@ void SearchNodeBase::gen_children (std::function<void(std::shared_ptr<SearchNode
     this->add_child(child);
     act_on_child(child);
   }
+}
+
+std::shared_ptr<SearchNodeIface> SearchNodeBase::gen_new_root (std::size_t line_num) {
+  auto child{ this->create_detached_child() };
+  child->set_depth(0);
+  child->mark_line(this->get_player_to_act(), line_num);
+  return child;
 }
 
 void SearchNodeBase::set_minimax_score_from_children () {

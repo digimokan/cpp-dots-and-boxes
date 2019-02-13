@@ -61,10 +61,12 @@ public:
   bool has_parent () const final;
   bool has_children () const final;
   std::size_t get_depth () const final;
+  void set_depth (std::size_t in_depth) final;
   Player get_player_to_act () const final;
   Board get_board () const final;
   std::optional<std::size_t> get_marked_line () const final;
   void gen_children (std::function<void(std::shared_ptr<SearchNodeIface>)> act_on_child) final;
+  std::shared_ptr<SearchNodeIface> gen_new_root (std::size_t line_num) final;
   void set_minimax_score_from_children () final;
   std::shared_ptr<SearchNodeIface> get_minimax_child () override = 0;
 
