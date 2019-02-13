@@ -62,6 +62,7 @@ public:
   bool has_children () const final;
   std::size_t get_depth () const final;
   Player get_player_to_act () const final;
+  Board get_board () const final;
   std::optional<std::size_t> get_marked_line () const final;
   void gen_children (std::function<void(std::shared_ptr<SearchNodeIface>)> act_on_child) final;
   void set_minimax_score_from_children () final;

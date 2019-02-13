@@ -89,6 +89,10 @@ Player SearchNodeBase::get_player_to_act () const {
   return this->player_to_act;
 }
 
+Board SearchNodeBase::get_board () const {
+  return this->board;
+}
+
 std::optional<std::size_t> SearchNodeBase::get_marked_line () const {
   return this->marked_line;
 }

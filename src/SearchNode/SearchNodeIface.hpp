@@ -50,6 +50,7 @@ public:
   virtual bool has_children () const = 0;
   virtual std::size_t get_depth () const = 0;
   virtual Player get_player_to_act () const = 0;
+  virtual Board get_board () const = 0;
   virtual std::optional<std::size_t> get_marked_line () const = 0;
   virtual void gen_children (std::function<void(std::shared_ptr<SearchNodeIface>)> act_on_child) = 0;
   virtual void set_minimax_score_from_children () = 0;
