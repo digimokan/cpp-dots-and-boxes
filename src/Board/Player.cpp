@@ -38,7 +38,7 @@ std::ostream& operator<< (std::ostream& os, const Player& player) {
 }
 
 Player Get_opposite_player (Player player) {
-  Player opposite;
+  Player opposite{};
   switch (player) {
     case Player::ONE:
       opposite = Player::COMPUTER;
