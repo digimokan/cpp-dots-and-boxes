@@ -19,14 +19,14 @@ purpose:  for current board, collect move input (line num to mark) from terminal
 *******************************************************************************/
 
 #include "Board.hpp"
-#include "MoveInputIface.hpp"
 #include "SearchNodeIface.hpp"
+#include "TerminalMoveInput.hpp"
 
 /*******************************************************************************
 * BASE / DERIVED METHODS
 *******************************************************************************/
 
-std::size_t get_line_to_mark (const std::shared_ptr<SearchNodeIface>& node) {
+std::size_t TerminalMoveInput::get_line_to_mark (const std::shared_ptr<SearchNodeIface>& node) {
   Board current_board{ node->get_board() };
   std::optional<std::size_t> line_to_mark{ std::nullopt };
   while (line_to_mark == std::nullopt) {
