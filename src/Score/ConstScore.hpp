@@ -13,7 +13,6 @@ purpose:  given board, return [ Human - Computer ] score
 * SYSTEM INCLUDES
 *******************************************************************************/
 
-#include <cstddef>
 #include <cstdint>
 
 /*******************************************************************************
@@ -39,7 +38,6 @@ public:
 
   // constructors
   ConstScore () = default;
-  explicit ConstScore (std::size_t dimensions);
 
   // destructor
   ~ConstScore () override = default;
