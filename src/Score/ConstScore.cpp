@@ -10,6 +10,7 @@ purpose:  given board, return [ Human - Computer ] score
 * SYSTEM INCLUDES
 *******************************************************************************/
 
+#include <cstddef>
 #include <cstdint>
 
 /*******************************************************************************
@@ -17,8 +18,18 @@ purpose:  given board, return [ Human - Computer ] score
 *******************************************************************************/
 
 #include "Board.hpp"
+#include "CompilerUtils.hpp"
 #include "ConstScore.hpp"
 #include "Player.hpp"
+
+/*******************************************************************************
+* CONSTRUCTORS
+*******************************************************************************/
+
+ConstScore::ConstScore (std::size_t dimensions)
+    : ConstScore{} {
+  MARK_AS_USED(dimensions);
+}
 
 /*******************************************************************************
 * BASE / DERIVED METHODS
