@@ -45,7 +45,7 @@ void TerminalMoveOutput::send (std::shared_ptr<SearchNodeIface> node) {
 std::string TerminalMoveOutput::last_line_marked (const std::shared_ptr<SearchNodeIface>& node) const {
   auto last_line{ node->get_marked_line() };
   if (last_line.has_value())
-    return std::to_string(last_line.value());
-  return "N/A";
+    return node->get_board().get_row_col_code(last_line.value());
+  return "";
 }
 
