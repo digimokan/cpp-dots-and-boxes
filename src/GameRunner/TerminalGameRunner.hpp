@@ -24,7 +24,7 @@ public:
 
   // constructors
   TerminalGameRunner () = delete;
-  TerminalGameRunner (std::size_t board_dimensions, const std::shared_ptr<ScoreIface>& scorer, std::size_t max_search_depth);
+  TerminalGameRunner (std::size_t board_dimensions, const std::shared_ptr<ScoreIface>& scorer, std::size_t max_search_depth, const std::shared_ptr<MoveFinderIface>& move_finder);
 
   // destructor
   ~TerminalGameRunner () override = default;
