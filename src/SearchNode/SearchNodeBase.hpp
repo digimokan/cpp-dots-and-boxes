@@ -69,7 +69,7 @@ public:
   std::shared_ptr<SearchNodeIface> gen_new_root (std::size_t line_num) final;
   void set_minimax_score_from_children () final;
   std::shared_ptr<SearchNodeIface> get_minimax_child () override = 0;
-  void set_alpha_or_beta (std::size_t minimax_score) override { }
+  void set_alpha_or_beta (int64_t minimax_score) override { }
 
   // specialized methods
   std::shared_ptr<SearchNodeBase> get_parent () const;
@@ -98,6 +98,7 @@ protected:
 
 private:
 
+  // fields
   std::optional<std::size_t> marked_line;
   std::size_t depth;
   std::optional<int64_t> minimax_score;

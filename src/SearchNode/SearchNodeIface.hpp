@@ -57,7 +57,7 @@ public:
   virtual std::shared_ptr<SearchNodeIface> gen_new_root (std::size_t line_num) = 0;
   virtual void set_minimax_score_from_children () = 0;
   virtual std::shared_ptr<SearchNodeIface> get_minimax_child () = 0;
-  virtual void set_alpha_or_beta (std::size_t minimax_score) = 0;
+  virtual void set_alpha_or_beta (int64_t minimax_score) = 0;
 
 protected:
 

@@ -80,3 +80,39 @@ TEST_CASE("3 x 3 board, multiple scoring opportunities") {
 
 }
 
+TEST_CASE("get_beta(), set_alpha_or_beta()") {
+
+  constexpr std::size_t dimensions{ 3 };
+  auto scorer{ std::make_shared<ConstScore>() };
+  Board board{ dimensions };
+  auto node{ std::make_shared<MinNode>(board, Player::ONE, scorer) };
+
+  SUBCASE("beta not set") {
+    CHECK_EQ(node->get_beta(), std::nullopt);
+  }
+
+  SUBCASE("initial beta set") {
+    node->set_alpha_or_beta(4);
+    const std::optional<int64_t> beta{ node->get_beta() };
+    CHECK_UNARY(beta.has_value());
+    CHECK_EQ(beta, 4);
+  }
+
+  SUBCASE("replace with lower score") {
+    node->set_alpha_or_beta(4);
+    node->set_alpha_or_beta(2);
+    const std::optional<int64_t> beta{ node->get_beta() };
+    CHECK_UNARY(beta.has_value());
+    CHECK_EQ(beta, 2);
+  }
+
+  SUBCASE("do not replace with higher score") {
+    node->set_alpha_or_beta(4);
+    node->set_alpha_or_beta(8);
+    const std::optional<int64_t> beta{ node->get_beta() };
+    CHECK_UNARY(beta.has_value());
+    CHECK_EQ(beta, 4);
+  }
+
+}
+

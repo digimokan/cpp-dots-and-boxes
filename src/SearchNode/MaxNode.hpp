@@ -11,6 +11,13 @@ purpose:  a MAX node impl of SearchNodeBase
 #define MAX_NODE_HPP 1
 
 /*******************************************************************************
+* SYSTEM INCLUDES
+*******************************************************************************/
+
+#include <cstdint>
+#include <optional>
+
+/*******************************************************************************
 * USER INCLUDES
 *******************************************************************************/
 
@@ -46,11 +53,18 @@ public:
 
   // base / derived methods
   std::shared_ptr<SearchNodeIface> get_minimax_child () final;
+  void set_alpha_or_beta (int64_t minimax_score) final;
+
+  // specialized methods
+  std::optional<int64_t> get_alpha () const;
 
 private:
 
   // base / derived methods
   std::shared_ptr<SearchNodeBase> create_detached_child () final;
+
+  // fields
+  std::optional<int64_t> alpha;
 
 };
 
