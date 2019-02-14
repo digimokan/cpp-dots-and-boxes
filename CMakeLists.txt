@@ -170,6 +170,23 @@ include_directories("${CMAKE_SOURCE_DIR}")
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
 include_dir_and_recurse_subdirs(${project_source_dirs})
 
+# load cmake built-in modules to check availability
+include(CheckIncludeFiles)
+include(CheckFunctionExists)
+
+# check include availability
+check_include_files("getopt.h" HAVE_GETOPT_H)
+if(NOT HAVE_GETOPT_H)
+  message( FATAL_ERROR "getopt.h header not found" )
+endif()
+
+# check function availability
+check_function_exists("getopt_long" HAVE_GETOPT_LONG)
+if(NOT HAVE_GETOPT_LONG)
+  message( FATAL_ERROR "getopt_long function not available" )
+endif()
+add_definitions("-DPOSIXLY_CORRECT")
+
 ################################################################################
 # TESTING (OPTIONAL ADD-ON TO BUILD)
 ################################################################################
