@@ -115,6 +115,11 @@ bool Board::is_row_col_code_valid (const std::string& row_col_code) const {
   return true;
 }
 
+std::string Board::get_row_col_code (std::size_t line_num) const {
+  std::string code{};
+  return (code + this->get_row_code(line_num) + this->get_col_code(line_num));
+}
+
 /*******************************************************************************
 * FRIEND CLASS METHODS
 *******************************************************************************/
@@ -243,5 +248,32 @@ std::size_t Board::get_label_index (char code) const {
   const std::size_t code_pos{ this->get_hdr_labels().find(code) };
   assert(code_pos != std::string::npos);
   return code_pos;
+}
+
+char Board::get_row_code (std::size_t line_num) const {
+  const std::size_t dim{ this->get_board_dimensions() };
+  std::size_t row_index{ 0 };
+  std::size_t line_counter{ 0 };
+  while(true) {
+    line_counter += dim;
+    if (line_counter >= (line_num + 1))
+      break;
+    row_index++;
+    line_counter += (dim + 1);
+    if (line_counter >= (line_num + 1))
+      break;
+    row_index++;
+  }
+  return this->get_hdr_labels().at(row_index);
+}
+
+char Board::get_col_code (std::size_t line_num) const {
+  const std::size_t dim{ this->get_board_dimensions() };
+  std::size_t row_index{ this->get_hdr_labels().find( this->get_row_code(line_num) ) };
+  const std::size_t row_base{ (row_index * dim) + (row_index / 2) };
+  const std::size_t col_base{ static_cast<size_t>(((row_index % 2) == 0) ? 1 : 0) };
+  const std::size_t col_counter{ line_num - row_base };
+  const std::size_t col_index{ col_base + (col_counter * 2) };
+  return this->get_hdr_labels().at(col_index);
 }
 

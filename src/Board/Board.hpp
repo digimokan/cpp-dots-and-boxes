@@ -67,6 +67,7 @@ public:
   bool is_completed () const;
   std::size_t get_line_num (const std::string& row_col_code) const;
   bool is_row_col_code_valid (const std::string& row_col_code) const;
+  std::string get_row_col_code (std::size_t line_num) const;
 
   // friend class methods
   friend std::ostream& operator<< (std::ostream& os, const Board& board);
@@ -93,6 +94,8 @@ private:
   std::string box_row_string (std::size_t box_row_num) const;
   const std::string& get_hdr_labels () const;
   std::size_t get_label_index (char code) const;
+  char get_row_code (std::size_t line_num) const;
+  char get_col_code (std::size_t line_num) const;
 
 };
 
