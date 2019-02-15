@@ -51,6 +51,7 @@ public:
   // base / derived methods
   int64_t calc_score (const Board& board) const final;
   int64_t calc_player_score (Player player, const Board& board) const final;
+  std::string get_box_val_string () const final;
 
 };
 

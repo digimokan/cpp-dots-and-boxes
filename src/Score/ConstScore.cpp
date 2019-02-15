@@ -37,3 +37,7 @@ int64_t ConstScore::calc_player_score (Player player, const Board& board) const 
   return score;
 }
 
+std::string ConstScore::get_box_val_string () const {
+  return "Each box is worth 1 point.";
+}
+

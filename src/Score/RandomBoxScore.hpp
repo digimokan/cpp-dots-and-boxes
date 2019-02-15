@@ -53,6 +53,7 @@ public:
   // base / derived methods
   int64_t calc_score (const Board& board) const final;
   int64_t calc_player_score (Player player, const Board& board) const final;
+  std::string get_box_val_string () const final;
 
   // specialized methods
   int64_t get_random_box_score (std::size_t box_num) const;
@@ -65,6 +66,7 @@ private:
 
   // fields
   std::vector<int64_t> box_scores;
+  std::size_t board_dimensions;
 
 };
 

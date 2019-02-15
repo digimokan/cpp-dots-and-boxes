@@ -102,6 +102,10 @@ Board SearchNodeBase::get_board () const {
   return this->board;
 }
 
+std::shared_ptr<ScoreIface> SearchNodeBase::get_scorer () const {
+  return this->scorer;
+}
+
 std::optional<std::size_t> SearchNodeBase::get_marked_line () const {
   return this->marked_line;
 }

@@ -65,6 +65,7 @@ public:
   void set_depth (std::size_t in_depth) final;
   Player get_player_to_act () const final;
   Board get_board () const final;
+  std::shared_ptr<ScoreIface> get_scorer () const final;
   std::optional<std::size_t> get_marked_line () const final;
   void add_child (const std::shared_ptr<SearchNodeIface>& child) final;
   void gen_children (std::function<void(std::shared_ptr<SearchNodeIface>)> act_on_child) final;

@@ -19,6 +19,7 @@ purpose:  for current board, collect move input (line num to mark) from terminal
 *******************************************************************************/
 
 #include "Board.hpp"
+#include "ScoreIface.hpp"
 #include "SearchNodeIface.hpp"
 #include "TerminalMoveInput.hpp"
 
@@ -30,10 +31,12 @@ std::size_t TerminalMoveInput::get_line_to_mark (const std::shared_ptr<SearchNod
   Board current_board{ node->get_board() };
   std::optional<std::size_t> line_to_mark{ std::nullopt };
   while (line_to_mark == std::nullopt) {
-    std::cout << "\nEnter [row][column] to mark: ";
+    std::cout << "\nEnt [ROW][COL] to mark, or # for box vals: ";
     std::string row_col_code{};
     std::cin >> row_col_code;
-    if (! current_board.is_row_col_code_valid(row_col_code)) {
+    if (row_col_code == "#") {
+      std::cout << '\n' << node->get_scorer()->get_box_val_string();
+    } else if (! current_board.is_row_col_code_valid(row_col_code)) {
       std::cout << "\nInvalid [row][column] code, try again.\n";
     } else if (current_board.is_line_marked(current_board.get_line_num(row_col_code))) {
       std::cout << "\nLine already marked, try again.\n";

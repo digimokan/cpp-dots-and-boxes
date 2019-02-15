@@ -27,8 +27,9 @@ purpose:  given board, return [ Human - Computer ] score
 * CONSTRUCTORS
 *******************************************************************************/
 
-RandomBoxScore::RandomBoxScore (std::size_t dimensions) {
-  this->init_box_scores(dimensions);
+RandomBoxScore::RandomBoxScore (std::size_t dimensions)
+  : board_dimensions{dimensions} {
+  this->init_box_scores(this->board_dimensions);
 }
 
 /*******************************************************************************
@@ -46,6 +47,19 @@ int64_t RandomBoxScore::calc_player_score (Player player, const Board& board) co
   auto add_to_sum{ [this, &score] (auto box_num) { score += this->box_scores.at(box_num); } };
   board.for_each_player_boxmark(player, add_to_sum);
   return score;
+}
+
+std::string RandomBoxScore::get_box_val_string () const {
+  std::string out_string{};
+  const std::size_t dim{ this->board_dimensions };
+  for (std::size_t box_row{0}; box_row < dim; ++box_row) {
+    for (std::size_t box_col{0}; box_col < dim; ++box_col) {
+      out_string.append(u8"  ");
+      out_string.append(std::to_string(this->box_scores.at((box_row * dim) + box_col)));
+    }
+    out_string.append(u8"\n");
+  }
+  return out_string;
 }
 
 /*******************************************************************************

@@ -22,6 +22,7 @@ purpose:  a dots and boxes search node
 
 class Board;
 enum class Player;
+class ScoreIface;
 
 /*******************************************************************************
 * INTERFACE
@@ -53,6 +54,7 @@ public:
   virtual void set_depth (std::size_t in_depth) = 0;
   virtual Player get_player_to_act () const = 0;
   virtual Board get_board () const = 0;
+  virtual std::shared_ptr<ScoreIface> get_scorer () const = 0;
   virtual std::optional<std::size_t> get_marked_line () const = 0;
   virtual void add_child (const std::shared_ptr<SearchNodeIface>& child) = 0;
   virtual void gen_children (std::function<void(std::shared_ptr<SearchNodeIface>)> act_on_child) = 0;
