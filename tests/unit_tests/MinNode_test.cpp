@@ -15,6 +15,7 @@
 *******************************************************************************/
 
 #include "ConstScore.hpp"
+#include "MaxNode.hpp"
 #include "MinNode.hpp"
 
 /*******************************************************************************
@@ -112,6 +113,91 @@ TEST_CASE("get_alpha_or_beta(), set_alpha_or_beta()") {
     const std::optional<int64_t> beta{ node->get_alpha_or_beta() };
     CHECK_UNARY(beta.has_value());
     CHECK_EQ(beta, 4);
+  }
+
+}
+
+TEST_CASE("cutoff_gen_children()") {
+
+  constexpr std::size_t dimensions{ 3 };
+  auto scorer{ std::make_shared<ConstScore>() };
+  Board board{ dimensions };
+  auto single_node{ std::make_shared<MinNode>(board, Player::ONE, scorer) };
+  auto parent{ std::make_shared<MaxNode>(board, Player::ONE, scorer) };
+  auto node_with_parent_children{ std::make_shared<MinNode>(parent) };
+  auto child{ std::make_shared<MaxNode>(node_with_parent_children) };
+  auto node_with_parent{ std::make_shared<MinNode>(parent) };
+  auto node_with_children{ std::make_shared<MinNode>(board, Player::ONE, scorer) };
+  auto alt_child{ std::make_shared<MaxNode>(node_with_children) };
+
+  SUBCASE("node with no parent, no children, no beta") {
+    CHECK_FALSE(single_node->cutoff_gen_children());
+  }
+
+  SUBCASE("node with no parent, no children, beta") {
+    single_node->set_alpha_or_beta(4);
+    CHECK_FALSE(single_node->cutoff_gen_children());
+  }
+
+  SUBCASE("node with no parent, children, no beta") {
+    CHECK_FALSE(node_with_children->cutoff_gen_children());
+  }
+
+  SUBCASE("node with no parent, children, beta") {
+    node_with_children->set_alpha_or_beta(4);
+    CHECK_FALSE(node_with_children->cutoff_gen_children());
+  }
+
+  SUBCASE("node with parent (no alpha), no children, no beta") {
+    CHECK_FALSE(node_with_parent->cutoff_gen_children());
+  }
+
+  SUBCASE("node with parent (has alpha), no children, no beta") {
+    parent->set_alpha_or_beta(4);
+    CHECK_FALSE(node_with_parent->cutoff_gen_children());
+  }
+
+  SUBCASE("node with parent (no alpha), no children, beta") {
+    node_with_parent->set_alpha_or_beta(4);
+    CHECK_FALSE(node_with_parent->cutoff_gen_children());
+  }
+
+  SUBCASE("node with parent (larger alpha), no children, beta") {
+    node_with_parent->set_alpha_or_beta(4);
+    parent->set_alpha_or_beta(8);
+    CHECK_UNARY(node_with_parent->cutoff_gen_children());
+  }
+
+  SUBCASE("node with parent (smaller alpha), no children, beta") {
+    node_with_parent->set_alpha_or_beta(4);
+    parent->set_alpha_or_beta(2);
+    CHECK_FALSE(node_with_parent->cutoff_gen_children());
+  }
+
+  SUBCASE("node with parent (no alpha), children, no beta") {
+    CHECK_FALSE(node_with_parent_children->cutoff_gen_children());
+  }
+
+  SUBCASE("node with parent (has alpha), children, no beta") {
+    node_with_parent->set_alpha_or_beta(4);
+    CHECK_FALSE(node_with_parent_children->cutoff_gen_children());
+  }
+
+  SUBCASE("node with parent (no alpha), children, beta") {
+    node_with_parent_children->set_alpha_or_beta(4);
+    CHECK_FALSE(node_with_parent_children->cutoff_gen_children());
+  }
+
+  SUBCASE("node with parent (larger alpha), children, beta") {
+    node_with_parent_children->set_alpha_or_beta(4);
+    parent->set_alpha_or_beta(8);
+    CHECK_UNARY(node_with_parent_children->cutoff_gen_children());
+  }
+
+  SUBCASE("node with parent (smaller alpha), children, beta") {
+    node_with_parent_children->set_alpha_or_beta(4);
+    parent->set_alpha_or_beta(2);
+    CHECK_FALSE(node_with_parent_children->cutoff_gen_children());
   }
 
 }

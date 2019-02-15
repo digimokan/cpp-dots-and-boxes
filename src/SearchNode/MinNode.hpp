@@ -52,6 +52,7 @@ public:
   MinNode& operator= (MinNode&& rh) = default;
 
   // base / derived methods
+  bool cutoff_gen_children () const final;
   std::shared_ptr<SearchNodeIface> get_minimax_child () final;
   void set_alpha_or_beta (int64_t minimax_score) final;
   std::optional<int64_t> get_alpha_or_beta () const final;

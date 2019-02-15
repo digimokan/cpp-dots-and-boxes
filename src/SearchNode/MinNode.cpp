@@ -40,6 +40,18 @@ MinNode::MinNode (const std::shared_ptr<MaxNode>& parent)
 * BASE / DERIVED METHODS
 *******************************************************************************/
 
+bool MinNode::cutoff_gen_children () const {
+  if (! this->beta.has_value())
+    return false;
+  if (! this->has_parent())
+    return false;
+  auto parent{ this->get_parent() };
+  if (! parent->get_alpha_or_beta().has_value())
+    return false;
+  int64_t parent_alpha{ parent->get_alpha_or_beta().value() };
+  return (this->beta <= parent_alpha);
+}
+
 std::shared_ptr<SearchNodeIface> MinNode::get_minimax_child () {
   return this->get_min_child();
 }
