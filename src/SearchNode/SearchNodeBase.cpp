@@ -118,7 +118,6 @@ void SearchNodeBase::gen_children (std::function<void(std::shared_ptr<SearchNode
     act_on_child(child);
     if (this->cutoff_gen_children())
       break;
-    /* this->add_child(child); */
   }
 }
 

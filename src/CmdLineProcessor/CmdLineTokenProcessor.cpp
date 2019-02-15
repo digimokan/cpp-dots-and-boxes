@@ -21,6 +21,7 @@ purpose:  process program-input command-line tokens
 * USER INCLUDES
 *******************************************************************************/
 
+#include "AlphaBetaMoveFinder.hpp"
 #include "CmdLineTokenProcessor.hpp"
 #include "ConstScore.hpp"
 #include "MiniMaxMoveFinder.hpp"
@@ -171,6 +172,6 @@ void CmdLineTokenProcessor::handle_minimax_search () {
 }
 
 void CmdLineTokenProcessor::handle_alpha_beta_minimax_search () {
-  this->move_finder = std::make_shared<MiniMaxMoveFinder>();
+  this->move_finder = std::make_shared<AlphaBetaMoveFinder>();
 }
 
