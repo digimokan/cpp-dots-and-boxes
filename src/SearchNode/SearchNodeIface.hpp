@@ -53,11 +53,14 @@ public:
   virtual Player get_player_to_act () const = 0;
   virtual Board get_board () const = 0;
   virtual std::optional<std::size_t> get_marked_line () const = 0;
+  virtual void add_child (const std::shared_ptr<SearchNodeIface>& child) = 0;
   virtual void gen_children (std::function<void(std::shared_ptr<SearchNodeIface>)> act_on_child) = 0;
+  virtual bool cutoff_gen_children () const = 0;
   virtual std::shared_ptr<SearchNodeIface> gen_new_root (std::size_t line_num) = 0;
   virtual void set_minimax_score_from_children () = 0;
   virtual std::shared_ptr<SearchNodeIface> get_minimax_child () = 0;
   virtual void set_alpha_or_beta (int64_t minimax_score) = 0;
+  virtual std::optional<int64_t> get_alpha_or_beta () const = 0;
 
 protected:
 

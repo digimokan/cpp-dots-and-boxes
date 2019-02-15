@@ -80,7 +80,7 @@ TEST_CASE("3 x 3 board, multiple scoring opportunities") {
 
 }
 
-TEST_CASE("get_beta(), set_alpha_or_beta()") {
+TEST_CASE("get_alpha_or_beta(), set_alpha_or_beta()") {
 
   constexpr std::size_t dimensions{ 3 };
   auto scorer{ std::make_shared<ConstScore>() };
@@ -88,12 +88,12 @@ TEST_CASE("get_beta(), set_alpha_or_beta()") {
   auto node{ std::make_shared<MinNode>(board, Player::ONE, scorer) };
 
   SUBCASE("beta not set") {
-    CHECK_EQ(node->get_beta(), std::nullopt);
+    CHECK_EQ(node->get_alpha_or_beta(), std::nullopt);
   }
 
   SUBCASE("initial beta set") {
     node->set_alpha_or_beta(4);
-    const std::optional<int64_t> beta{ node->get_beta() };
+    const std::optional<int64_t> beta{ node->get_alpha_or_beta() };
     CHECK_UNARY(beta.has_value());
     CHECK_EQ(beta, 4);
   }
@@ -101,7 +101,7 @@ TEST_CASE("get_beta(), set_alpha_or_beta()") {
   SUBCASE("replace with lower score") {
     node->set_alpha_or_beta(4);
     node->set_alpha_or_beta(2);
-    const std::optional<int64_t> beta{ node->get_beta() };
+    const std::optional<int64_t> beta{ node->get_alpha_or_beta() };
     CHECK_UNARY(beta.has_value());
     CHECK_EQ(beta, 2);
   }
@@ -109,7 +109,7 @@ TEST_CASE("get_beta(), set_alpha_or_beta()") {
   SUBCASE("do not replace with higher score") {
     node->set_alpha_or_beta(4);
     node->set_alpha_or_beta(8);
-    const std::optional<int64_t> beta{ node->get_beta() };
+    const std::optional<int64_t> beta{ node->get_alpha_or_beta() };
     CHECK_UNARY(beta.has_value());
     CHECK_EQ(beta, 4);
   }

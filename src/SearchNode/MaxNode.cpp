@@ -51,15 +51,11 @@ void MaxNode::set_alpha_or_beta (int64_t minimax_score) {
     this->alpha = std::max(minimax_score, this->alpha.value());
 }
 
-std::shared_ptr<SearchNodeBase> MaxNode::create_detached_child () {
-  return std::make_shared<MinNode>(this->shared_from_this());
+std::optional<int64_t> MaxNode::get_alpha_or_beta () const {
+  return this->alpha;
 }
 
-/*******************************************************************************
-* SPECIALIZED METHODS
-*******************************************************************************/
-
-std::optional<int64_t> MaxNode::get_alpha () const {
-  return this->alpha;
+std::shared_ptr<SearchNodeBase> MaxNode::create_detached_child () {
+  return std::make_shared<MinNode>(this->shared_from_this());
 }
 

@@ -101,12 +101,18 @@ std::optional<std::size_t> SearchNodeBase::get_marked_line () const {
   return this->marked_line;
 }
 
+void SearchNodeBase::add_child (const std::shared_ptr<SearchNodeIface>& child) {
+  this->children.push_back(child);
+}
+
 void SearchNodeBase::gen_children (std::function<void(std::shared_ptr<SearchNodeIface>)> act_on_child) {
   for (const auto line_num : this->board.get_unmarked_lines()) {
     auto child{ this->create_detached_child() };
     child->mark_line(this->get_player_to_act(), line_num);
-    this->add_child(child);
     act_on_child(child);
+    if (this->cutoff_gen_children())
+      break;
+    this->add_child(child);
   }
 }
 
@@ -137,11 +143,7 @@ void SearchNodeBase::mark_line (Player player, std::size_t line_num) {
   this->board.mark_line(player, line_num);
 }
 
-void SearchNodeBase::add_child (const std::shared_ptr<SearchNodeBase>& child) {
-  this->children.push_back(child);
-}
-
-std::shared_ptr<SearchNodeBase> SearchNodeBase::get_max_child () const {
+std::shared_ptr<SearchNodeIface> SearchNodeBase::get_max_child () const {
   auto comp = [] (const auto& left, const auto& right) {
     int64_t left_score{ left->get_minimax_score() };
     int64_t right_score{ right->get_minimax_score() };
@@ -152,7 +154,7 @@ std::shared_ptr<SearchNodeBase> SearchNodeBase::get_max_child () const {
   return *it;
 }
 
-std::shared_ptr<SearchNodeBase> SearchNodeBase::get_min_child () const {
+std::shared_ptr<SearchNodeIface> SearchNodeBase::get_min_child () const {
   auto comp = [] (const auto& left, const auto& right) {
     int64_t left_score{ left->get_minimax_score() };
     int64_t right_score{ right->get_minimax_score() };

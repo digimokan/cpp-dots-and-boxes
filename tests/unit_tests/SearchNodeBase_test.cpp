@@ -23,8 +23,8 @@ public:
   explicit SNBMock (const std::shared_ptr<SNBMock>& parent) : SearchNodeBase{parent} { }
   void mark_line_mock (Player player, std::size_t line_num) { this->mark_line(player, line_num); }
   void add_child_mock (const std::shared_ptr<SearchNodeBase>& child) { this->add_child(child); }
-  std::shared_ptr<SearchNodeBase> get_max_child_mock () const { return this->get_max_child(); }
-  std::shared_ptr<SearchNodeBase> get_min_child_mock () const { return this->get_min_child(); }
+  std::shared_ptr<SearchNodeIface> get_max_child_mock () const { return this->get_max_child(); }
+  std::shared_ptr<SearchNodeIface> get_min_child_mock () const { return this->get_min_child(); }
   std::shared_ptr<SearchNodeIface> get_minimax_child () override { return this->get_max_child(); }
 // should be **protected**:
   std::shared_ptr<SearchNodeBase> create_detached_child () override { return std::make_shared<SNBMock>(this->shared_from_this()); }
