@@ -59,6 +59,7 @@ public:
   void set_minimax_score () final;
   int64_t get_minimax_score () final;
   bool has_parent () const final;
+  std::shared_ptr<SearchNodeIface> get_parent () const final;
   bool has_children () const final;
   std::size_t get_depth () const final;
   void set_depth (std::size_t in_depth) final;
@@ -73,9 +74,6 @@ public:
   std::shared_ptr<SearchNodeIface> get_minimax_child () override = 0;
   void set_alpha_or_beta (int64_t minimax_score) override { }
   std::optional<int64_t> get_alpha_or_beta () const override { return std::nullopt; }
-
-  // specialized methods
-  std::shared_ptr<SearchNodeBase> get_parent () const;
 
 protected:
 

@@ -77,6 +77,11 @@ bool SearchNodeBase::has_parent () const {
   return (this->depth > 0);
 }
 
+std::shared_ptr<SearchNodeIface> SearchNodeBase::get_parent () const {
+  assert(! this->parent.expired());
+  return this->parent.lock();
+}
+
 bool SearchNodeBase::has_children () const {
   return (! this->children.empty());
 }
@@ -109,10 +114,11 @@ void SearchNodeBase::gen_children (std::function<void(std::shared_ptr<SearchNode
   for (const auto line_num : this->board.get_unmarked_lines()) {
     auto child{ this->create_detached_child() };
     child->mark_line(this->get_player_to_act(), line_num);
+    this->add_child(child);
     act_on_child(child);
     if (this->cutoff_gen_children())
       break;
-    this->add_child(child);
+    /* this->add_child(child); */
   }
 }
 
@@ -131,11 +137,6 @@ void SearchNodeBase::set_minimax_score_from_children () {
 /*******************************************************************************
 * SPECIALIZED METHODS
 *******************************************************************************/
-
-std::shared_ptr<SearchNodeBase> SearchNodeBase::get_parent () const {
-  assert(! this->parent.expired());
-  return this->parent.lock();
-}
 
 void SearchNodeBase::mark_line (Player player, std::size_t line_num) {
   assert(! this->marked_line.has_value());

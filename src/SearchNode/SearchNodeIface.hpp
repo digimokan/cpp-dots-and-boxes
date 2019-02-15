@@ -47,6 +47,7 @@ public:
   virtual void set_minimax_score () = 0;
   virtual int64_t get_minimax_score () = 0;
   virtual bool has_parent () const = 0;
+  virtual std::shared_ptr<SearchNodeIface> get_parent () const = 0;
   virtual bool has_children () const = 0;
   virtual std::size_t get_depth () const = 0;
   virtual void set_depth (std::size_t in_depth) = 0;
