@@ -27,18 +27,16 @@ and play options. Implement computer's move search with intelligent AI.
 ## Features
 
 * Intuitive UI.
-* Selectable strength of computer opponent.
-* Intelligent move search algorithms with efficient, modern C++.
-
-A paragraph or two about project motivation and overall design.
+* Selectable AI search algorithms.
+* Non-recursive minimax and alpha-beta search implementations.
+* Custom search-depth specification.
 
 ## Requirements
 
 * A Linux/UNIX system
-* C++ 11
+* C++ 17
 * CMake
 * Git
-* Boost Library
 
 ## Quick Start
 
@@ -60,61 +58,123 @@ A paragraph or two about project motivation and overall design.
    $ ./third_party/smart-build/src/smart-build.sh --build-type-release
    ```
 
-4. Run the program:
+4. Play against the computer (with default settings):
 
    ```shell
    $ ./cpp-dots-and-boxes
    ```
 
+5. Sample starting game-play input/output:
+
+```
+  A B C D E F G
+A ·   ·   ·   ·
+B
+C ·   ·   ·   ·
+D
+E ·   ·   ·   ·
+F
+G ·   ·   ·   ·
+
+Last Line Marked:         Player 1 Score: 0
+Player To Act:      1     Player C Score: 0
+
+Ent [ROW][COL] to mark, or # for box vals: #
+
+  1  1  5
+  1  4  5
+  3  1  1
+
+Ent [ROW][COL] to mark, or # for box vals: ed
+
+  A B C D E F G
+A · ― ·   ·   ·
+B
+C ·   ·   ·   ·
+D
+E ·   · ― ·   ·
+F
+G ·   ·   ·   ·
+
+Last Line Marked:  AB     Player 1 Score: 0
+Player To Act:      1     Player C Score: 0
+
+Ent [ROW][COL] to mark, or # for box vals:
+```
+
 ## Full Usage / Options
 
 ```
-<cut and paste help menu here>
+USAGE
+  ./dots-and-boxes  -h
+  ./dots-and-boxes  [-b <n>]  [-c|-r]  [-s <n>]  [-m|-a]
+OPTIONS
+  -h, --help
+      print this help message
+  -b <n>, --board-dimensions=<n>
+      play on an n x n board (default 3 x 3)
+  -c, --const-box-score
+      use constant box scoring (each box is worth 1 point)
+  -r, --random-box-score
+      use random box scoring (each box is worth random 1-5 points)
+  -s <n>, --max-search-depth=<n>
+      have AI search n-moves-deep (default 2-moves-deep)
+  -m, --minimax-search
+      have AI search with minimax algorithm (default)
+  -a, --alpha-beta-minimax-search
+      have AI search with alpha-beta minimax algorithm
 ```
 
 ## Examples
 
-* Run with some option:
+* Play on a 5 x 5 board, using random box score values:
 
    ```shell
-   $ ./cpp-dots-and-boxes -d
+   $ ./cpp-dots-and-boxes -b 5 -r
    ```
 
-* Run with some other option:
+* Play on a 4 x 4 board against an AI that uses the alpha-beta search algorithm:
 
    ```shell
-   $ ./cpp-dots-and-boxes -rt
+   $ ./cpp-dots-and-boxes -b 4 -a
+   ```
+
+* Play against an AI that uses alpha-beta search to max search depth 5
+
+   ```shell
+   $ ./cpp-dots-and-boxes --max-search-depth=5 --alpha-beta-minimax-search
    ```
 
 ## Design
 
-A paragraph or two about architecture.
-
-<img src="readme_assets/design_diagram.svg" width="100%" height="400" alt="Design Diagram">
+[Video Tour Of Program Architecture](https://youtu.be/MnQp4u84Ecc)
 
 ## Source Code Layout
 
 ```
 ├─┬ cpp-dots-and-boxes/
+│ │
 │ ├─┬ src/
-│ │ ├─┬ somea/
-│ │ │ ├── Hello.cpp
-│ │ │ └── Hello.hpp
-│ │ ├─┬ someb/
-│ │ │ ├── Goodbye.cpp
-│ │ │ └── Goodbye.hpp
-│ │ └── main.cpp
+│ │ ├── Board/            # dots-and-boxes board: marked lines, marked boxes
+│ │ ├── CmdLineProcessor/ # process command-line options
+│ │ ├── GameRunner/       # run a dots and boxes game
+│ │ ├── MoveFinder/       # core minimax and alpha-beta algorithm logic
+│ │ ├── Score/            # calc a player's score for a given board
+│ │ ├── SearchNode/       # search tree node: has board, score, alpha/beta
+│ │ ├── Utils/            # utility functions
+│ │ └── main.cpp          # main program entry point
+│ │
 │ ├─┬ tests/
-│ │ ├─┬ unit_tests/
-│ │ │ └── Goodbye_test.cpp
-│ │ └── doctest_testharness.cpp
+│ │ ├── unit_tests/             # unit test for each class and its methods
+│ │ ├── doctest_testharness.cpp # configures the unit tester (doctest)
+│ │ └── test_runner.sh          # one-line driver to smart-build the program
+│ │
 │ ├─┬ third_party/
-│ │ └─┬ doctest/
-│ │   └── doctest.h
-│ ├── .project_config
-│ ├── .vimrc
-│ ├── smart-build.sh
-│ └── CMakeLists.txt
+│ │ ├── doctest/                # the unit-tester
+│ │ └── smart-build             # the building/testing utility
+│ │
+│ ├── .project_config           # smart-build compilation/build config
+│ └── CMakeLists.txt            # CMake build config
 ```
 
 ## Contributing
