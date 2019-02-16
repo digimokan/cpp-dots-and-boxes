@@ -66,41 +66,41 @@ and play options. Implement computer's move search with intelligent AI.
 
 5. Sample starting game-play input/output:
 
-  ```
-    A B C D E F G
-  A ·   ·   ·   ·
-  B
-  C ·   ·   ·   ·
-  D
-  E ·   ·   ·   ·
-  F
-  G ·   ·   ·   ·
+   ```
+     A B C D E F G
+   A ·   ·   ·   ·
+   B
+   C ·   ·   ·   ·
+   D
+   E ·   ·   ·   ·
+   F
+   G ·   ·   ·   ·
 
-  Last Line Marked:         Player 1 Score: 0
-  Player To Act:      1     Player C Score: 0
+   Last Line Marked:         Player 1 Score: 0
+   Player To Act:      1     Player C Score: 0
 
-  Ent [ROW][COL] to mark, or # for box vals: #
+   Ent [ROW][COL] to mark, or # for box vals: #
 
-    1  1  5
-    1  4  5
-    3  1  1
+     1  1  5
+     1  4  5
+     3  1  1
 
-  Ent [ROW][COL] to mark, or # for box vals: ed
+   Ent [ROW][COL] to mark, or # for box vals: ed
 
-    A B C D E F G
-  A · ― ·   ·   ·
-  B
-  C ·   ·   ·   ·
-  D
-  E ·   · ― ·   ·
-  F
-  G ·   ·   ·   ·
+     A B C D E F G
+   A · ― ·   ·   ·
+   B
+   C ·   ·   ·   ·
+   D
+   E ·   · ― ·   ·
+   F
+   G ·   ·   ·   ·
 
-  Last Line Marked:  AB     Player 1 Score: 0
-  Player To Act:      1     Player C Score: 0
+   Last Line Marked:  AB     Player 1 Score: 0
+   Player To Act:      1     Player C Score: 0
 
-  Ent [ROW][COL] to mark, or # for box vals:
-  ```
+   Ent [ROW][COL] to mark, or # for box vals:
+   ```
 
 ## Full Usage / Options
 
