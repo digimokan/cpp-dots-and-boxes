@@ -142,7 +142,7 @@ void CmdLineTokenProcessor::handle_help (int exit_code) {
   std::cout << "  " << "-s <n>, --max-search-depth=<n>" << '\n' << "      "
             << "have AI search n-moves-deep (default 2-moves-deep)" << '\n';
   std::cout << "  " << "-m, --minimax-search" << '\n' << "      "
-            << "have AI search with minimax algorithm" << '\n';
+            << "have AI search with minimax algorithm (default)" << '\n';
   std::cout << "  " << "-a, --alpha-beta-minimax-search" << '\n' << "      "
             << "have AI search with alpha-beta minimax algorithm" << '\n';
   exit(exit_code);
