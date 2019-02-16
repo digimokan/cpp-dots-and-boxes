@@ -32,20 +32,20 @@ purpose:  a base class impl of SearchNode
 SearchNodeBase::SearchNodeBase (Board board, Player player_to_act, std::shared_ptr<ScoreIface> score_iface)
   : board{std::move(board)},
     player_to_act{player_to_act},
-    scorer{std::move(score_iface)},
     marked_line{std::nullopt},
-    depth{0},
-    minimax_score{std::nullopt}
+    scorer{std::move(score_iface)},
+    minimax_score{std::nullopt},
+    depth{0}
 { }
 
 SearchNodeBase::SearchNodeBase (const std::shared_ptr<SearchNodeBase>& parent)
   : board{parent->board},
     player_to_act{Get_opposite_player(parent->get_player_to_act())},
-    scorer{parent->scorer},
-    parent{parent},
     marked_line{std::nullopt},
+    scorer{parent->scorer},
+    minimax_score{std::nullopt},
     depth{parent->get_depth() + 1},
-    minimax_score{std::nullopt}
+    parent{parent}
 { }
 
 /*******************************************************************************

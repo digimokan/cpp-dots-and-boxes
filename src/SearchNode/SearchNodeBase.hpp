@@ -90,19 +90,17 @@ protected:
   std::shared_ptr<SearchNodeIface> get_max_child () const;
   std::shared_ptr<SearchNodeIface> get_min_child () const;
 
-  // fields
-  Board board;
-  Player player_to_act;
-  std::shared_ptr<ScoreIface> scorer;
-  std::weak_ptr<SearchNodeBase> parent;
-  std::list<std::shared_ptr<SearchNodeIface>> children;
-
 private:
 
   // fields
+  Board board;
+  Player player_to_act;
   std::optional<std::size_t> marked_line;
-  std::size_t depth;
+  std::shared_ptr<ScoreIface> scorer;
   std::optional<int64_t> minimax_score;
+  std::size_t depth;
+  std::weak_ptr<SearchNodeBase> parent;
+  std::list<std::shared_ptr<SearchNodeIface>> children;
 
 };
 
